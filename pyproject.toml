@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rlbook"
+version = "0.1.0"
+description = "Companion code for Reinforcement Learning: From Foundations to Frontiers"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.9"
+authors = [
+    {name = "Uday Kamath"},
+]
+
+dependencies = [
+    "numpy>=1.21",
+    "matplotlib>=3.5",
+]
+
+[project.optional-dependencies]
+deep = [
+    "torch>=2.0",
+    "gymnasium[classic-control]>=0.29",
+]
+alignment = [
+    "torch>=2.0",
+    "transformers>=4.30",
+    "datasets>=2.14",
+]
+agentic = [
+    "torch>=2.0",
+    "gymnasium>=0.29",
+    "stable-baselines3>=2.0",
+    "transformers>=4.30",
+]
+all = [
+    "torch>=2.0",
+    "gymnasium[classic-control]>=0.29",
+    "transformers>=4.30",
+    "datasets>=2.14",
+    "stable-baselines3>=2.0",
+    "seaborn>=0.12",
+    "openai>=1.0",
+]
+dev = [
+    "pytest>=7.0",
+]
+
+[tool.setuptools.packages.find]
+include = ["rlbook*"]

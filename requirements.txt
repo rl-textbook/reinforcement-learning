@@ -1,0 +1,22 @@
+# Core
+numpy>=1.21
+matplotlib>=3.5
+
+# Chapter 4: Deep RL
+torch>=2.0
+gymnasium[classic-control]>=0.29
+
+# Chapter 5: Alignment / RLHF
+transformers>=4.30
+datasets>=2.14
+openai>=1.0            # GPT-4 judge (optional)
+
+# Chapter 7: Agentic RL
+stable-baselines3>=2.0
+
+# Visualization
+seaborn>=0.12
+imageio>=2.20
+
+# Development
+pytest>=7.0
