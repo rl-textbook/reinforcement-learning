@@ -19,16 +19,19 @@ class MathVerifier:
         self.number = re.compile(r"[-+]?\d[\d,]*(?:\.\d+)?")
 
     def extract_answer(self, response_text: str) -> Optional[float]:
+        # Step 1: Prefer the explicit FINAL: marker when it is present.  
         marker_match = self.marker.search(response_text)
         if marker_match:
             try:
                 return float(marker_match.group(1).replace(",", ""))
             except Exception:
                 return None
-
+                
+        # Step 2: In the practical notebook we keep strict parsing on.
         if self.require_final_marker:
             return None
 
+        # Step 3: Optional backward-compatible fallback: use the last parseable number.
         nums = self.number.findall(response_text)
         if not nums:
             return None
@@ -38,6 +41,7 @@ class MathVerifier:
             return None
 
     def reward(self, response_text: str, ground_truth_text: str) -> Tuple[float, str]:
+        # Step 3: Parse the model prediction under the FINAL: contract.
         marker_match = self.marker.search(response_text)
         pred = self.extract_answer(response_text)
 
@@ -46,6 +50,7 @@ class MathVerifier:
                 return 0.0, "no-final-marker"
             return 0.0, "no-parse"
 
+        # Step 4: Normalize the ground-truth answer and compare numerically.
         try:
             gt = float(str(ground_truth_text).replace(",", ""))
         except Exception:
