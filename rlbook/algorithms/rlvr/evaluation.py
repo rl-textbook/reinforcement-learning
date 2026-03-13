@@ -86,6 +86,7 @@ def evaluate_passk_and_diagnostics(
     kmax = max(ks)
     n_eval = min(n_eval, len(dataset))
 
+    # Step 1: Initialize Pass@k counts and lightweight reasoning diagnostics.
     successes = {k: 0 for k in ks}
     lengths = []
     steps = []
@@ -94,6 +95,7 @@ def evaluate_passk_and_diagnostics(
     parse_fail = 0
     exact = 0
 
+    # Step 2: Iterate over evaluation prompts in mini-batches.
     for start in range(0, n_eval, batch_prompts):
         end = min(n_eval, start + batch_prompts)
         batch = [dataset[i] for i in range(start, end)]
@@ -101,6 +103,7 @@ def evaluate_passk_and_diagnostics(
         prompts = [formatter.format(ex["question"]) for ex in batch]
         ground_truths = [extractor(ex["answer"]) for ex in batch]
 
+        # Step 3: Sample kmax responses once per prompt.
         gen_ids, prompt_len, response_texts, _ = sample_groups(
             model=model,
             tokenizer=tokenizer,
@@ -116,6 +119,7 @@ def evaluate_passk_and_diagnostics(
 
         batch_size = len(batch)
 
+        # Step 4: Apply the verifier to each group and accumulate Pass@k successes.
         for i in range(batch_size):
             gt = ground_truths[i]
             group = response_texts[i * kmax:(i + 1) * kmax]
@@ -128,6 +132,7 @@ def evaluate_passk_and_diagnostics(
                 if any(rewards[:k]):
                     successes[k] += 1
 
+            # Step 5: Record exact@1 / parse-fail@1 and simple reasoning diagnostics.
             first_reward, first_reason = verifier.reward(group[0], gt)
             exact += int(first_reward == 1.0)
             parse_fail += int(first_reason == "no-final-marker")
@@ -136,11 +141,13 @@ def evaluate_passk_and_diagnostics(
             math_markers.append(heuristic_math_markers(group[0]))
             self_corr.append(heuristic_self_correction(group[0]))
 
+        # Step 6: Measure completion lengths from the same response mask used elsewhere.
         response_mask_full = build_response_mask_from_gen(gen_ids, prompt_len, tokenizer.eos_token_id)
         first_indices = torch.arange(0, batch_size * kmax, kmax, device=gen_ids.device)
         response_len_tokens = response_mask_full[first_indices, prompt_len:].sum(dim=1).cpu().numpy()
         lengths.extend(response_len_tokens.tolist())
 
+    # Step 7: Convert counts into probabilities and package diagnostics.
     passk = {k: successes[k] / max(1, n_eval) for k in ks}
     diag = {
         "len_tokens": float(np.mean(lengths)) if lengths else 0.0,
