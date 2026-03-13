@@ -16,8 +16,8 @@ class RewardModel(nn.Module):
         self.value_head = nn.Linear(hidden_size, 1)
 
     def forward(self, input_ids, attention_mask):
-        outputs = self.base_model(input_ids=input_ids, attention_mask=attention_mask)
-        hidden = outputs.last_hidden_state                   # (B, T, H)
+        outputs = self.base_model(input_ids=input_ids, attention_mask=attention_mask, output_hidden_states=True, return_dict=True,)
+        hidden = outputs.hidden_states[-1]                  # (B, T, H)
         mask_exp = attention_mask.unsqueeze(-1).float()      # (B, T, 1)
         sum_h = (hidden * mask_exp).sum(dim=1)               # (B, H)
         count = mask_exp.sum(dim=1).clamp(min=1)             # (B, 1)
