@@ -113,6 +113,7 @@ def sample_groups(
     device = _resolve_device(model, device)
     _seed_everything(seed)
 
+    # Step 1: Tokenize the prompt batch, padding and truncating as needed.
     tok_kwargs = {
         "return_tensors": "pt",
         "padding": True,
@@ -124,6 +125,7 @@ def sample_groups(
     enc = tokenizer(list(prompts), **tok_kwargs).to(device)
     prompt_len = enc["input_ids"].shape[1]
 
+    # Step 2: Sample G continuations per prompt in one batched generate() call.
     gen_ids = model.generate(
         **enc,
         do_sample=True,
@@ -135,7 +137,10 @@ def sample_groups(
         eos_token_id=tokenizer.eos_token_id,
     )
 
+    # Step 3: Repeat the prompt attention mask so it aligns with the flattened rollout batch.
     prompt_attn_rep = enc["attention_mask"].repeat_interleave(group_size, dim=0)
+
+    # Step 4: Slice off the sampled suffix and decode it for verifier use.
     response_ids = gen_ids[:, prompt_len:]
     responses_text = tokenizer.batch_decode(response_ids, skip_special_tokens=True)
 
@@ -144,10 +149,12 @@ def sample_groups(
 
 def build_response_mask_from_gen(gen_ids: torch.Tensor, prompt_len: int, eos_id: int) -> torch.Tensor:
     """Build a full-sequence mask with 1s on response tokens through EOS."""
+    # Step 1: Slice off the generated suffix for each sequence.
     n_rows, total_len = gen_ids.shape
     response_ids = gen_ids[:, prompt_len:]
     response_len = response_ids.shape[1]
 
+    # Step 2: Find the first EOS in each response; if none appears, keep the full suffix.
     eos_pos = torch.full((n_rows,), response_len, device=gen_ids.device, dtype=torch.long)
     is_eos = response_ids == eos_id
     any_eos = is_eos.any(dim=1)
@@ -155,9 +162,11 @@ def build_response_mask_from_gen(gen_ids: torch.Tensor, prompt_len: int, eos_id:
         first_eos = is_eos.float().argmax(dim=1)
         eos_pos = torch.where(any_eos, first_eos + 1, eos_pos)
 
+    # Step 3: Mark response tokens up to and including EOS.
     arange = torch.arange(response_len, device=gen_ids.device).unsqueeze(0).expand(n_rows, response_len)
     response_mask = (arange < eos_pos.unsqueeze(1)).float()
 
+    # Step 4: Embed that response-only mask back into the full prompt+response sequence.
     full_mask = torch.zeros((n_rows, total_len), device=gen_ids.device, dtype=torch.float32)
     full_mask[:, prompt_len:] = response_mask
     return full_mask
@@ -165,11 +174,16 @@ def build_response_mask_from_gen(gen_ids: torch.Tensor, prompt_len: int, eos_id:
 
 def token_logp_batch(model, ids: torch.Tensor, attn_mask: torch.Tensor, autocast_ctx=None) -> torch.Tensor:
     """Return token log-probs for `ids[:, 1:]` under the model."""
+    # Step 1: Forward pass on the full prompt+response sequences.
     with _ctx(autocast_ctx):
         outputs = model(input_ids=ids, attention_mask=attn_mask)
     logits = outputs.logits
+    
+    # Step 2: Shift logits left so position t predicts token ids[:, t+1].
     logp = F.log_softmax(logits[:, :-1, :].float(), dim=-1)
     targets = ids[:, 1:]
+
+    # Step 3: Gather the log-prob assigned to each observed next token.
     return logp.gather(dim=-1, index=targets.unsqueeze(-1)).squeeze(-1)
 
 
@@ -282,12 +296,13 @@ def grpo_update_step(
     device = _resolve_device(model, device)
     extractor = ground_truth_extractor or extract_gt_number_text
 
-    model.eval()  # dropout off during rollout collection
-
+    # Step 1: Turn off dropout and build the prompt/answer batch used for verification.
+    model.eval() 
     prompts = [formatter.format(ex["question"]) for ex in batch_examples]
     ground_truths = [extractor(ex["answer"]) for ex in batch_examples]
     batch_size = len(prompts)
 
+    # Step 2: Sample G rollouts per prompt with the current model.
     gen_ids, prompt_len, response_texts, prompt_attn_rep = sample_groups(
         model=model,
         tokenizer=tokenizer,
@@ -303,6 +318,7 @@ def grpo_update_step(
 
     total_samples = batch_size * group_size
 
+    # Step 3: Verify each sampled completion to produce binary rewards in a flat vector.
     rewards = torch.zeros((total_samples,), device=device, dtype=torch.float32)
     parse_fail = 0
     exact = 0
@@ -317,6 +333,7 @@ def grpo_update_step(
             exact += int(reward_value == 1.0)
             parse_fail += int(reason == "no-final-marker")
 
+    # Step 4: Reshape rewards to (B, G) and compute within-group z-score advantages.
     rewards_grouped = rewards.view(batch_size, group_size)
     advantages = torch.zeros_like(rewards_grouped)
 
@@ -326,9 +343,11 @@ def grpo_update_step(
         sigma = row.std(unbiased=False)
         advantages[i] = (row - mu) / (sigma + adv_eps)
 
+    # Step 5: Flatten advantages back to the rollout dimension and freeze them for PPO epochs.
     advantages = advantages.view(total_samples).detach()
     adv_nz = float((advantages.abs() > 1e-12).float().mean().item())
 
+    # Step 6: Build masks used by the token-level GRPO objective.
     eos_id = tokenizer.eos_token_id
     if isinstance(eos_id, (list, tuple)):
         eos_id = int(eos_id[0])
@@ -337,17 +356,21 @@ def grpo_update_step(
     attn_full = torch.cat([prompt_attn_rep, response_mask_full[:, prompt_len:]], dim=1)
     response_mask_shift = response_mask_full[:, 1:]
 
+    # Step 7: Snapshot old token log-probabilities once and keep them fixed across epochs.
     with torch.no_grad():
         old_logp = token_logp_batch(model, gen_ids, attn_full, autocast_ctx=autocast_ctx)
 
+    # Step 8: Reuse the same sampled rollouts for multiple PPO-style epochs.
     last_loss = None
     for _ in range(grpo_epochs):
         optimizer.zero_grad(set_to_none=True)
 
+        # Step 8a: Recompute current token log-probs under the updated policy.
         new_logp = token_logp_batch(model, gen_ids, attn_full, autocast_ctx=autocast_ctx)
         ratio = torch.exp(new_logp - old_logp)
         ratio_clip = torch.clamp(ratio, 1.0 - clip_eps, 1.0 + clip_eps)
 
+        # Step 8b: Apply the clipped GRPO objective on response tokens only.
         adv = advantages.unsqueeze(1)
         obj = torch.minimum(ratio * adv, ratio_clip * adv)
         obj = obj * response_mask_shift
@@ -360,6 +383,7 @@ def grpo_update_step(
         if not torch.isfinite(loss).all():
             raise RuntimeError(f"Non-finite GRPO loss: {loss}")
 
+        # Step 8c: Backpropagation, gradient clipping, and an optimizer step.
         if scaler is not None and getattr(scaler, "is_enabled", lambda: False)():
             scaler.scale(loss).backward()
             scaler.unscale_(optimizer)
@@ -373,6 +397,7 @@ def grpo_update_step(
 
         last_loss = loss
 
+    # Step 9: Return the same training metrics tracked by the helper module.
     metrics = {
         "loss": float(last_loss.item()) if last_loss is not None else 0.0,
         "mean_reward": float(rewards.mean().item()),
