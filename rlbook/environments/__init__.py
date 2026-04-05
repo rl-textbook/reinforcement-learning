@@ -6,3 +6,5 @@ try:
     from rlbook.environments.cartpole_wrapper import CartPoleWrapper, set_global_seed
 except ImportError:
     pass
+
+__all__ = ["create_grid_world"]
