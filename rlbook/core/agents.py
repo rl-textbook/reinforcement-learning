@@ -30,13 +30,32 @@ class RandomWalkAgent:
         return random.choice(self.env.actions)
 
 
-def run_episode(env: Environment, agent, max_steps: int = 100) -> Tuple[float, int, List[int]]:
-    """Run a single episode, returning (total_reward, steps, path)."""
+def run_episode(env, agent, max_steps=100, render=False, delay=0.5, holes=None):
+    """
+    Run a single episode with the given agent.
+
+    Args:
+        env: The environment to run in
+        agent: The agent to control actions
+        max_steps: Maximum steps before termination
+        render: Whether to visualize steps
+        delay: Delay between rendered frames
+        holes: Hole states as either state IDs or (row, col) tuples
+
+    Returns:
+        Tuple of (total_reward, steps, path)
+    """
     state = env.reset()
-    total_reward = 0.0
+    total_reward = 0
     done = False
     steps = 0
     path = [state.id]
+
+    if render:
+        grid_size = int(np.sqrt(len(env.states)))
+        _, ax = plt.subplots(figsize=(8, 8))
+        goal_state = len(env.states) - 1
+        hole_ids = normalize_holes(holes, grid_size)
 
     while not done and steps < max_steps:
         action = agent.choose_action(state)
@@ -45,6 +64,23 @@ def run_episode(env: Environment, agent, max_steps: int = 100) -> Tuple[float, i
         path.append(next_state.id)
         state = next_state
         steps += 1
+
+        if render:
+            ax.clear()
+            state_labels = {path[-1]: "Agent"}
+            visualize_grid_world(
+                grid_size=grid_size,
+                state_labels=state_labels,
+                holes=hole_ids,
+                goal_state=goal_state,
+                start_state=0,
+                ax=ax,
+                title=f"Step {steps}, Reward: {total_reward:.1f}"
+            )
+            plt.pause(delay)
+
+    if render:
+        plt.close()
 
     return total_reward, steps, path
 
