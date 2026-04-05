@@ -49,39 +49,57 @@ def run_episode(env: Environment, agent, max_steps: int = 100) -> Tuple[float, i
     return total_reward, steps, path
 
 
-def compare_agents(env: Environment, policies: Dict[str, Optional[Dict]],
-                   episodes: int = 100, max_steps: int = 100) -> Dict[str, Dict]:
-    """Compare multiple agents by running episodes and collecting metrics.
+def compare_agents(env, rl_policy, random_agent, policy_agent, num_episodes=100, holes=None):
+    """
+    Compare RL agent with random walk on the same environment.
 
     Args:
-        env: The environment.
-        policies: Dict mapping label -> policy dict (None for random agent).
-        episodes: Number of evaluation episodes.
-        max_steps: Max steps per episode.
+        env: The environment
+        rl_policy: Policy dictionary from RL
+        random_agent: Random walk agent
+        num_episodes: Number of episodes to run
+        holes: Set of state IDs that are holes
 
     Returns:
-        Dict mapping label -> {'mean_reward', 'mean_steps', 'success_rate'}.
+        Comparison statistics
     """
-    goal_state_id = env.states[-1].id
-    results = {}
+    goal_state = len(env.states) - 1
 
-    for label, policy in policies.items():
-        if policy is None:
-            agent = RandomWalkAgent(env)
-        else:
-            agent = PolicyAgent(env, policy)
+    # Run episodes with both agents
+    rl_rewards = []
+    rl_steps = []
+    rl_paths = []
 
-        rewards, steps, successes = [], [], []
-        for _ in range(episodes):
-            total_reward, num_steps, path = run_episode(env, agent, max_steps)
-            rewards.append(total_reward)
-            steps.append(num_steps)
-            successes.append(1 if path[-1] == goal_state_id else 0)
+    random_rewards = []
+    random_steps = []
+    random_paths = []
 
-        results[label] = {
-            'mean_reward': float(np.mean(rewards)),
-            'mean_steps': float(np.mean(steps)),
-            'success_rate': float(100.0 * np.mean(successes)),
-        }
+    for _ in range(num_episodes):
+        # RL agent
+        reward, steps, path = run_episode(env, policy_agent)
+        rl_rewards.append(reward)
+        rl_steps.append(steps)
+        rl_paths.append(path)
+
+        # Random agent
+        reward, steps, path = run_episode(env, random_agent)
+        random_rewards.append(reward)
+        random_steps.append(steps)
+        random_paths.append(path)
+
+    # Calculate success rates (reaching goal, not falling in hole)
+    rl_success_rate = np.mean([1 if path[-1] == goal_state else 0 for path in rl_paths])
+    random_success_rate = np.mean([1 if path[-1] == goal_state else 0 for path in random_paths])
+
+    results = {
+        "rl_mean_reward": np.mean(rl_rewards),
+        "rl_mean_steps": np.mean(rl_steps),
+        "rl_success_rate": rl_success_rate,
+        "random_mean_reward": np.mean(random_rewards),
+        "random_mean_steps": np.mean(random_steps),
+        "random_success_rate": random_success_rate,
+        "rl_best_path": rl_paths[np.argmax(rl_rewards)],
+        "random_best_path": random_paths[np.argmax(random_rewards)]
+    }
 
     return results
