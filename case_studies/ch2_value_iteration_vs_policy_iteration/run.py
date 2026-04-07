@@ -34,7 +34,7 @@ def _import_rlbook() -> Dict[str, Any]:
             run_value_iter_steps,
             run_policy_iter_steps,
         )
-        from rlbook.core import PolicyAgent, RandomWalkAgent, compare_agents, run_episode
+        from rlbook.core import PolicyAgent, RandomWalkAgent, compare_agents, run_episode, compute_metrics
         from rlbook.viz import (
             START_COLOR,
             HOLE_COLOR,
@@ -120,30 +120,6 @@ def save_figure(fig, path, show=False):
 
 def nonterminal_policy(policy: Dict[int, Any]) -> Dict[int, Any]:
     return {s: a for s, a in policy.items() if a is not None}
-
-
-def compute_metrics(
-    env: Any,
-    policy: Dict[int, Any] | None,
-    episodes: int,
-    run_episode_fn: Any,
-    policy_agent_cls: Any,
-    random_agent_cls: Any,
-) -> Dict[str, float]:
-    """Evaluate one policy (or a random agent if policy is None) over several episodes."""
-    agent = policy_agent_cls(env, policy) if policy is not None else random_agent_cls(env)
-    rewards, steps, successes = [], [], []
-    goal_state = env.states[-1].id
-    for _ in range(episodes):
-        total_reward, num_steps, path = run_episode_fn(env, agent, max_steps=100)
-        rewards.append(float(total_reward))
-        steps.append(int(num_steps))
-        successes.append(1 if path[-1] == goal_state else 0)
-    return {
-        "mean_reward": float(np.mean(rewards)),
-        "mean_steps": float(np.mean(steps)),
-        "success_rate": float(100.0 * np.mean(successes)),
-    }
 
 
 def policy_match(env, pi_a: Dict[int, Any], pi_b: Dict[int, Any]) -> bool:
@@ -420,10 +396,10 @@ def main() -> int:
     save_figure(fig, save_dir / "07_policy_evolution_5x5.png", args.show)
 
     results = {
-        "VI": compute_metrics(env5, pi_vi5, args.episodes, run_episode, PolicyAgent, RandomWalkAgent),
-        "PI": compute_metrics(env5, pi_pi5, args.episodes, run_episode, PolicyAgent, RandomWalkAgent),
-        "Random": compute_metrics(env5, None, args.episodes, run_episode, PolicyAgent, RandomWalkAgent),
-    }
+    "VI": compute_metrics(env5, pi_vi5, num_episodes=args.episodes),
+    "PI": compute_metrics(env5, pi_pi5, num_episodes=args.episodes),
+    "Random": compute_metrics(env5, None, num_episodes=args.episodes),
+}
 
     labels = list(results.keys())
     fig, axes = plt.subplots(1, 3, figsize=(15, 4))
