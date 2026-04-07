@@ -102,12 +102,19 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def save_figure(fig: plt.Figure, path: Path, show: bool) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
+def save_figure(fig, path, show=False):
+    import matplotlib.pyplot as plt
+
+    # If fig is actually an Axes, get its figure
+    if hasattr(fig, "figure"):
+        fig = fig.figure
+
     fig.tight_layout()
-    fig.savefig(path, dpi=200, bbox_inches="tight")
+    fig.savefig(path, dpi=150)
+
     if show:
         plt.show()
+
     plt.close(fig)
 
 
@@ -295,7 +302,8 @@ def main() -> int:
         env4, theta=args.theta, max_iterations=args.vi_max_iterations
     )
     fig, ax = plt.subplots(figsize=(8, 4))
-    ax.semilogy(range(1, len(deltas_vi4) + 1), deltas_vi4, "o-")
+    plot_deltas = [max(d, args.theta * 0.1) for d in deltas_vi4]
+    ax.semilogy(range(1, len(plot_deltas) + 1), plot_deltas, "o-")
     ax.axhline(args.theta, linestyle="--", label=f"θ = {args.theta:g}")
     ax.set_xlabel("Iteration")
     ax.set_ylabel("Max Bellman Error (Δ)")
