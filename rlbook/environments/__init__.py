@@ -7,4 +7,4 @@ try:
 except ImportError:
     pass
 
-__all__ = ["create_grid_world"]
+__all__ = ["create_grid_world", "create_windy_desert_env", "apply_reward_shaping"]
