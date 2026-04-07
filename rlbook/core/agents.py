@@ -85,6 +85,26 @@ def run_episode(env, agent, max_steps=100, render=False, delay=0.5, holes=None):
     return total_reward, steps, path
 
 
+def compute_metrics(env, policy, num_episodes=100, max_steps=100):
+    agent = PolicyAgent(env, policy) if policy is not None else RandomWalkAgent(env)
+    rewards, steps, paths = [], [], []
+    goal_state = env.states[-1].id
+
+    for _ in range(num_episodes):
+        total_reward, num_steps, path = run_episode(env, agent, max_steps=max_steps)
+        rewards.append(float(total_reward))
+        steps.append(int(num_steps))
+        paths.append(path)
+
+    success_rate = np.mean([1 if path[-1] == goal_state else 0 for path in paths])
+
+    return {
+        "mean_reward": float(np.mean(rewards)),
+        "mean_steps": float(np.mean(steps)),
+        "success_rate": float(success_rate),
+        "best_path": paths[int(np.argmax(rewards))],
+    }
+
 def compare_agents(env, rl_policy, random_agent, policy_agent, num_episodes=100, holes=None):
     """
     Compare RL agent with random walk on the same environment.
@@ -99,43 +119,20 @@ def compare_agents(env, rl_policy, random_agent, policy_agent, num_episodes=100,
     Returns:
         Comparison statistics
     """
-    goal_state = len(env.states) - 1
-
-    # Run episodes with both agents
-    rl_rewards = []
-    rl_steps = []
-    rl_paths = []
-
-    random_rewards = []
-    random_steps = []
-    random_paths = []
-
-    for _ in range(num_episodes):
-        # RL agent
-        reward, steps, path = run_episode(env, policy_agent)
-        rl_rewards.append(reward)
-        rl_steps.append(steps)
-        rl_paths.append(path)
-
-        # Random agent
-        reward, steps, path = run_episode(env, random_agent)
-        random_rewards.append(reward)
-        random_steps.append(steps)
-        random_paths.append(path)
-
-    # Calculate success rates (reaching goal, not falling in hole)
-    rl_success_rate = np.mean([1 if path[-1] == goal_state else 0 for path in rl_paths])
-    random_success_rate = np.mean([1 if path[-1] == goal_state else 0 for path in random_paths])
+    rl_results = compute_metrics(env, rl_policy, num_episodes=num_episodes)
+    random_results = compute_metrics(env, None, num_episodes=num_episodes)
 
     results = {
-        "rl_mean_reward": np.mean(rl_rewards),
-        "rl_mean_steps": np.mean(rl_steps),
-        "rl_success_rate": rl_success_rate,
-        "random_mean_reward": np.mean(random_rewards),
-        "random_mean_steps": np.mean(random_steps),
-        "random_success_rate": random_success_rate,
-        "rl_best_path": rl_paths[np.argmax(rl_rewards)],
-        "random_best_path": random_paths[np.argmax(random_rewards)]
+        "rl_mean_reward": rl_results["mean_reward"],
+        "rl_mean_steps": rl_results["mean_steps"],
+        "rl_success_rate": rl_results["success_rate"],
+        "random_mean_reward": random_results["mean_reward"],
+        "random_mean_steps": random_results["mean_steps"],
+        "random_success_rate": random_results["success_rate"],
+        "rl_best_path": rl_results["best_path"],
+        "random_best_path": random_results["best_path"],
     }
 
+
     return results
+
