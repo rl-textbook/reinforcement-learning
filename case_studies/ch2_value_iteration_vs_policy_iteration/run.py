@@ -66,6 +66,7 @@ def _import_rlbook() -> Dict[str, Any]:
         "PolicyAgent": PolicyAgent,
         "RandomWalkAgent": RandomWalkAgent,
         "compare_agents": compare_agents,
+        "compute_metrics": compute_metrics,
         "run_episode": run_episode,
         "START_COLOR": START_COLOR,
         "HOLE_COLOR": HOLE_COLOR,
@@ -225,6 +226,7 @@ def main() -> int:
     PolicyAgent = modules["PolicyAgent"]
     RandomWalkAgent = modules["RandomWalkAgent"]
     compare_agents = modules["compare_agents"]
+    compute_metrics = modules["compute_metrics"]
     run_episode = modules["run_episode"]
     visualize_grid_world = modules["visualize_grid_world"]
     visualize_agent_path = modules["visualize_agent_path"]
@@ -430,12 +432,24 @@ def main() -> int:
         policy=pi_vi5,
         values=v_vi5,
         holes=hole_ids,
-        title="VI Agent Path (5×5)",
+        title="VI Agent Path (5×5)",    
     )
-    # visualize_agent_path may or may not return a Figure; use current active figure if needed.
     if fig is None:
         fig = plt.gcf()
     save_figure(fig, save_dir / "09_vi_agent_path_5x5.png", args.show)
+
+    # Best random-walk path visualization
+    random_best_path = results["Random"]["best_path"]
+
+    fig = visualize_agent_path(
+        env5,
+        random_best_path,
+        holes=hole_ids,
+        title="Best Random Walk Path (5×5)",
+    )
+    if fig is None:
+        fig = plt.gcf()
+    save_figure(fig, save_dir / "10_random_best_path_5x5.png", args.show)
 
     summary["cases"]["grid_5x5_holes"] = {
         "holes": holes,
@@ -447,6 +461,7 @@ def main() -> int:
             "steps": num_steps,
             "path": path,
         },
+        "random_best_path": random_best_path,
     }
 
     with open(save_dir / "summary.json", "w", encoding="utf-8") as f:

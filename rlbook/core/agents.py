@@ -96,7 +96,7 @@ def compute_metrics(env, policy, num_episodes=100, max_steps=100):
         steps.append(int(num_steps))
         paths.append(path)
 
-    success_rate = np.mean([1 if path[-1] == goal_state else 0 for path in paths])
+    success_rate = 100.0 * np.mean([1 if path[-1] == goal_state else 0 for path in paths])
 
     return {
         "mean_reward": float(np.mean(rewards)),
