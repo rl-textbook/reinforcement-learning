@@ -5,6 +5,7 @@ matplotlib>=3.5
 # Chapter 4: Deep RL
 torch>=2.0
 gymnasium[classic-control]>=0.29
+pandas>=1.5
 
 # Chapter 5: Alignment / RLHF
 transformers>=4.30
