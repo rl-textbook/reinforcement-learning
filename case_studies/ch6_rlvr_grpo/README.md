@@ -8,7 +8,7 @@ The script compares three stages of the same overall pipeline on **GSM8K**:
 - that same model after **supervised fine-tuning (SFT)** on chain-of-thought style reasoning
 - the SFT model after **GRPO-based RLVR** training
 
-The point of the chapter is not to turn the README into a theory lecture. The book handles the deeper RLVR ideas, the GRPO math, and the reasoning-model background. Here, the focus is practical:
+The book handles the deeper RLVR ideas, the GRPO math, and the reasoning-model background. Here, the focus is practical:
 
 - what the script is doing
 - what gets plotted and measured
