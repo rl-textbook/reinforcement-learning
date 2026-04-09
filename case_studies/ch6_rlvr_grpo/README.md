@@ -16,7 +16,7 @@ The book handles the deeper RLVR ideas, the GRPO math, and the reasoning-model b
 - which `python run.py --...` commands are the most useful
 - how to think about **CPU vs GPU**, **local vs Colab**, and **small vs benchmark-style runs**
 
-This is one of the first chapters where **compute configuration is part of the experiment design**, not just a convenience issue. A Chapter 6 run can feel tiny or expensive depending on a few core knobs, especially:
+This is a chapter where **compute configuration is part of the experiment design**, not just a convenience issue. A Chapter 6 run can feel tiny or expensive depending on a few core knobs, especially:
 
 - model size
 - token cap
