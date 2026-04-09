@@ -141,8 +141,6 @@ This case is used for:
 - agent evaluation against a random baseline
 - path visualization
 
-> Note: the current script does **not** expose stochastic grid worlds from the CLI, even though older versions of the README referenced them. The active case study in `run.py` is deterministic for both environments.
-
 ---
 
 ## Requirements
