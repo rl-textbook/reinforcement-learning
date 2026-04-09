@@ -90,7 +90,7 @@ def token_logp_batch(model, ids: torch.Tensor, attn_mask: torch.Tensor, autocast
     with autocast_ctx():
         out = model(input_ids=ids, attention_mask=attn_mask)
     logits = out.logits  # (N, T, V)
-    logp = F.log_softmax(logits[:, :-1, :].float(), dim=-1)
+    logp = F.log_softmax(logits[:, :-1, :], dim=-1)
     targets = ids[:, 1:]
     return logp.gather(dim=-1, index=targets.unsqueeze(-1)).squeeze(-1)
 

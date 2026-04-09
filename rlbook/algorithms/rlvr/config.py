@@ -36,7 +36,7 @@ class CFG:
     grpo_steps: int = 400
     grpo_lr: float = 2e-6
     prompts_per_step: int = 4
-    group_size: int = 8
+    group_size: int = 2
     clip_eps: float = 0.2
     adv_eps: float = 1e-6
     grpo_epochs: int = 2  # PPO-style: multiple epochs over the same rollouts
