@@ -94,8 +94,7 @@ def run_reinforce(seed: int, env: CartPoleWrapper, cfg: RunConfig, lr: float = 1
         mean_G = float(np.mean(G))
         baseline_mean = mean_G if baseline_mean is None else 0.9 * baseline_mean + 0.1 * mean_G
         loss = reinforce_update(policy, opt, logps, G, baseline_mean=baseline_mean)
-
-        if total_steps >= next_eval_step:
+        while total_steps >= next_eval_step:
             record_eval(next_eval_step, loss)
             next_eval_step += cfg.eval_every_steps
         if total_steps >= cfg.total_step_budget:
@@ -165,7 +164,7 @@ def run_actor_critic(
             s = s_next
             total_steps += 1
 
-            if total_steps >= next_eval_step:
+            while total_steps >= next_eval_step:
                 record_eval(next_eval_step)
                 next_eval_step += cfg.eval_every_steps
             if done or total_steps >= cfg.total_step_budget:
@@ -205,6 +204,8 @@ def run_dqn(seed: int, env: CartPoleWrapper, run_cfg: RunConfig, dqn_cfg: DQNCon
             "steps": int(step_label),
             "return_mean": float(np.mean(rets)),
             "return_iqr": _iqr(rets),
+            "epsilon": float(agent.epsilon()),
+            "replay_size": int(len(agent.replay)),
         })
 
     for ep in range(run_cfg.episodes):
@@ -219,7 +220,7 @@ def run_dqn(seed: int, env: CartPoleWrapper, run_cfg: RunConfig, dqn_cfg: DQNCon
             if total_steps > warmup:
                 _ = agent.update()
 
-            if total_steps >= next_eval_step:
+            while total_steps >= next_eval_step:
                 record_eval(next_eval_step)
                 next_eval_step += run_cfg.eval_every_steps
             if done or total_steps >= run_cfg.total_step_budget:

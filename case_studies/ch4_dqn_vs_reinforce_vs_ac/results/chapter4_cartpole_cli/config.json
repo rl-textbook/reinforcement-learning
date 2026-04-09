@@ -1,0 +1,49 @@
+{
+  "seeds": [
+    101,
+    202,
+    303
+  ],
+  "include_double_dqn": true,
+  "smoke_test": false,
+  "smooth_window": 1,
+  "solved_threshold": 450.0,
+  "auc_cap_steps": 20000,
+  "stability_bin_size": 1000,
+  "stability_max_steps": 100000,
+  "run_config": {
+    "gamma": 0.99,
+    "episodes": 10000,
+    "steps_per_episode": 1000,
+    "eval_every_steps": 10000,
+    "eval_episodes": 5,
+    "total_step_budget": 100000
+  },
+  "dqn_config": {
+    "gamma": 0.99,
+    "lr": 0.0002,
+    "replay_capacity": 100000,
+    "batch_size": 64,
+    "target_sync_every": 1000,
+    "eps_start": 1.0,
+    "eps_end": 0.05,
+    "eps_decay_steps": 80000,
+    "double_dqn": false
+  },
+  "double_dqn_config": {
+    "gamma": 0.99,
+    "lr": 0.0002,
+    "replay_capacity": 100000,
+    "batch_size": 64,
+    "target_sync_every": 1000,
+    "eps_start": 1.0,
+    "eps_end": 0.05,
+    "eps_decay_steps": 80000,
+    "double_dqn": true
+  },
+  "learning_rates": {
+    "reinforce_lr": 0.001,
+    "actor_lr": 0.0003,
+    "critic_lr": 0.001
+  }
+}

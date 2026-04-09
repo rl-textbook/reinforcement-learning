@@ -39,7 +39,7 @@ class DQNConfig:
     eps_start: float = 1.0
     eps_end: float = 0.05
     eps_decay_steps: int = 100_000
-    double_dqn: bool = True
+    double_dqn: bool = False
 
 
 class DQNAgent:
@@ -57,7 +57,9 @@ class DQNAgent:
     def epsilon(self):
         # Linearly interpolate epsilon from eps_start to eps_end over eps_decay_steps
         c = self.cfg
-        frac = min(1.0, self.env_steps / float(c.eps_decay_steps))
+        if c.eps_decay_steps <= 0:
+            return c.eps_end
+        frac = min(1.0, self.update_steps / float(c.eps_decay_steps))
         return c.eps_start + frac * (c.eps_end - c.eps_start)
 
     def act(self, s, eval_mode: bool = False):

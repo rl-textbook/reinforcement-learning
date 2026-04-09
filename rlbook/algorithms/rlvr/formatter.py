@@ -1,10 +1,8 @@
-"""Chapter 6 — Prompt formatting for RLVR/RLHF-style reasoning tasks."""
+"""Prompt formatting helpers for the Chapter 6 RLVR case study."""
 
 
 class CoTFormatter:
-    """Encourages step-by-step reasoning with a strict final answer marker."""
-
-    def __init__(self) -> None:
+    def __init__(self):
         self.system = (
             "Solve the following math problem step by step. "
             "End your response with 'FINAL: <final numeric answer>'."

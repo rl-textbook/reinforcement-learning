@@ -1,29 +1,27 @@
 #!/usr/bin/env python3
 """CLI case study for Chapter 4 deep RL on CartPole.
 
-This script expands the minimal Chapter 4 runner into a publication-ready command line
-experiment driver. It can:
+This version is aligned with the Chapter 4 case-study plotting conventions while
+keeping the cleaner, more statistically defensible parts of the CLI workflow.
 
-1) run REINFORCE, Actor-Critic, and DQN across multiple seeds,
-2) save raw evaluation logs and a summary table,
-3) generate cleaner evaluation-only learning curves,
-4) report sample efficiency via learning-curve AUC, and
-5) quantify stability across seeds.
-
-The script is intentionally aligned with the polished Chapter 4 notebook:
-- same core algorithms,
-- same evaluation-centric logging,
-- same default CartPole setup,
-- optional Double DQN ablation.
+What it produces
+----------------
+1) Evaluation-only learning curves.
+   - Combined plot: mean return across seeds with IQR band.
+   - Per-algorithm plots: thin seed traces + thick mean curve + optional IQR band.
+2) Sample efficiency via capped AUC over a common early-training budget.
+   - Mean capped AUC across seeds with std error bars.
+3) Stability over time.
+   - Across-seed IQR of evaluation return as a function of step bins.
+4) CSV artifacts for raw logs, aggregated curves, capped-AUC tables, stability,
+   and a compact summary table.
 
 Run from the project root so that ``rlbook`` is importable, e.g.
 
     python run.py
-    python run.py --quick
+    python run.py --smoke-test
     python run.py --include-double-dqn
     python run.py --from-jsonl results/ch4_cartpole/eval_logs.jsonl --no-run
-
-Outputs are written to ``--outdir/--run-name`` by default.
 """
 
 from __future__ import annotations
@@ -52,14 +50,24 @@ except RuntimeError:
     pass
 
 
+ALGO_ORDER = ["ActorCritic", "DQN", "REINFORCE", "DoubleDQN"]
 COLORS = {
-    "REINFORCE": "tab:orange",
-    "ActorCritic": "tab:green",
-    "DQN": "tab:blue",
-    "DoubleDQN": "tab:purple",
+    "ActorCritic": "tab:blue",
+    "DQN": "tab:orange",
+    "REINFORCE": "tab:green",
+    "DoubleDQN": "tab:red",
 }
 DEFAULT_SEEDS = [101, 202, 303]
-DEFAULT_SOLVED_THRESHOLD = 475.0
+DEFAULT_SOLVED_THRESHOLD = 450.0
+DEFAULT_TOTAL_STEP_BUDGET = 50_000
+DEFAULT_EVAL_EVERY_STEPS = 1_000
+DEFAULT_AUC_CAP_STEPS = 20_000
+DEFAULT_STABILITY_BIN_SIZE = 1_000
+SMOKE_EPISODES = 2_000
+SMOKE_STEPS_PER_EPISODE = 500
+SMOKE_EVAL_EVERY_STEPS = 1_000
+SMOKE_EVAL_EPISODES = 5
+SMOKE_TOTAL_STEP_BUDGET = 10_000
 
 
 def parse_args() -> argparse.Namespace:
@@ -91,9 +99,10 @@ def parse_args() -> argparse.Namespace:
         help="Also run the optional Double DQN ablation.",
     )
     parser.add_argument(
-        "--quick",
+        "--smoke-test", "--quick",
+        dest="smoke_test",
         action="store_true",
-        help="Use a much smaller step budget for a smoke test.",
+        help="Run a shorter smoke test. --quick is kept as a backwards-compatible alias.",
     )
     parser.add_argument(
         "--no-run",
@@ -115,23 +124,41 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--smooth-window",
         type=int,
-        default=3,
-        help="Centered rolling window used to smooth evaluation curves.",
+        default=1,
+        help="Centered rolling window for mean/IQR curves. Default 1 = no smoothing.",
     )
     parser.add_argument(
         "--solved-threshold",
         type=float,
         default=DEFAULT_SOLVED_THRESHOLD,
-        help="Solved threshold used for summary statistics.",
+        help="Solved threshold used for summary statistics and reference lines.",
+    )
+    parser.add_argument(
+        "--auc-cap-steps",
+        type=int,
+        default=DEFAULT_AUC_CAP_STEPS,
+        help="Cap used for the sample-efficiency AUC comparison.",
+    )
+    parser.add_argument(
+        "--stability-bin-size",
+        type=int,
+        default=DEFAULT_STABILITY_BIN_SIZE,
+        help="Bin size in steps for the stability-over-time plot.",
+    )
+    parser.add_argument(
+        "--stability-max-steps",
+        type=int,
+        default=None,
+        help="Maximum step shown in the stability-over-time plot. Default: full observed run.",
     )
 
     # RunConfig-style arguments
     parser.add_argument("--gamma", type=float, default=0.99)
     parser.add_argument("--episodes", type=int, default=10_000)
     parser.add_argument("--steps-per-episode", type=int, default=500)
-    parser.add_argument("--eval-every-steps", type=int, default=10_000)
-    parser.add_argument("--eval-episodes", type=int, default=5)
-    parser.add_argument("--total-step-budget", type=int, default=100_000)
+    parser.add_argument("--eval-every-steps", type=int, default=DEFAULT_EVAL_EVERY_STEPS)
+    parser.add_argument("--eval-episodes", type=int, default=10)
+    parser.add_argument("--total-step-budget", type=int, default=DEFAULT_TOTAL_STEP_BUDGET)
 
     # Learning rates
     parser.add_argument("--reinforce-lr", type=float, default=1e-3)
@@ -155,6 +182,21 @@ def canonical_formats(spec: str) -> list[str]:
     if not formats:
         raise ValueError("At least one output format is required.")
     return formats
+
+
+def ordered_algorithms(items: Iterable[str]) -> list[str]:
+    present = set(items)
+    ordered = [name for name in ALGO_ORDER if name in present]
+    extras = sorted(present - set(ordered))
+    return ordered + extras
+
+
+def compact_steps_label(steps: int) -> str:
+    if steps % 1_000 == 0:
+        return f"{steps // 1_000}k"
+    if steps >= 1_000:
+        return f"{steps / 1_000:.1f}k"
+    return f"{steps}"
 
 
 def area_under_curve(x: Sequence[float], y: Sequence[float]) -> float:
@@ -250,6 +292,11 @@ def smoothed_aggregate(agg: pd.DataFrame, window: int) -> pd.DataFrame:
     return out
 
 
+def resolve_plot_cap(df: pd.DataFrame, requested_cap: int) -> int:
+    observed_max = int(df["steps"].max()) if len(df) else requested_cap
+    return max(1, min(int(requested_cap), observed_max))
+
+
 def first_solved_step(seed_frame: pd.DataFrame, threshold: float) -> float:
     hit = seed_frame.loc[seed_frame["return_mean"] >= threshold, "steps"]
     if hit.empty:
@@ -257,27 +304,148 @@ def first_solved_step(seed_frame: pd.DataFrame, threshold: float) -> float:
     return float(hit.iloc[0])
 
 
-def build_summary(df: pd.DataFrame, agg: pd.DataFrame, solved_threshold: float) -> pd.DataFrame:
+def _deduplicate_curve(x: Sequence[float], y: Sequence[float]) -> tuple[np.ndarray, np.ndarray]:
+    curve = pd.DataFrame({"steps": np.asarray(x, dtype=np.float64), "value": np.asarray(y, dtype=np.float64)})
+    curve = curve.groupby("steps", as_index=False)["value"].mean().sort_values("steps")
+    return curve["steps"].to_numpy(dtype=np.float64), curve["value"].to_numpy(dtype=np.float64)
+
+
+def capped_auc(x: Sequence[float], y: Sequence[float], cap_steps: int) -> float:
+    x_arr, y_arr = _deduplicate_curve(x, y)
+    if len(x_arr) == 0:
+        return float("nan")
+
+    cap = float(cap_steps)
+
+    # Make the integration start explicit.
+    if x_arr[0] > 0.0:
+        x_arr = np.concatenate([[0.0], x_arr])
+        y_arr = np.concatenate([[y_arr[0]], y_arr])
+
+    # Truncate or extend to the common cap.
+    if cap < x_arr[0]:
+        x_arr = np.array([0.0, cap], dtype=np.float64)
+        y_arr = np.array([y_arr[0], y_arr[0]], dtype=np.float64)
+    elif x_arr[-1] < cap:
+        x_arr = np.concatenate([x_arr, [cap]])
+        y_arr = np.concatenate([y_arr, [y_arr[-1]]])
+    elif x_arr[-1] > cap:
+        y_cap = float(np.interp(cap, x_arr, y_arr))
+        keep = x_arr < cap
+        x_arr = np.concatenate([x_arr[keep], [cap]])
+        y_arr = np.concatenate([y_arr[keep], [y_cap]])
+
+    return area_under_curve(x_arr, y_arr)
+
+
+def build_sample_efficiency(df: pd.DataFrame, cap_steps: int) -> tuple[pd.DataFrame, pd.DataFrame]:
     rows: list[dict] = []
-    algo_names = sorted(
-        df["algo"].unique(),
-        key=lambda a: (0, list(COLORS).index(a)) if a in COLORS else (1, str(a)),
+    for algo in ordered_algorithms(df["algo"].unique()):
+        algo_df = df.loc[df["algo"] == algo].sort_values(["seed", "steps"])
+        for seed, seed_frame in algo_df.groupby("seed", sort=True):
+            auc = capped_auc(seed_frame["steps"], seed_frame["return_mean"], cap_steps)
+            rows.append(
+                {
+                    "algo": algo,
+                    "seed": int(seed),
+                    "auc_cap_steps": int(cap_steps),
+                    "auc_cap": float(auc),
+                }
+            )
+
+    per_seed = pd.DataFrame(rows)
+    if per_seed.empty:
+        return per_seed, pd.DataFrame(columns=["algo", "auc_mean", "auc_std", "n"])
+
+    summary = (
+        per_seed.groupby("algo")["auc_cap"]
+        .agg(
+            auc_mean="mean",
+            auc_std=lambda s: float(np.std(s.to_numpy(dtype=np.float64), ddof=0)),
+            n="count",
+        )
+        .reset_index()
     )
+    summary = summary.sort_values("algo", key=lambda s: s.map({a: i for i, a in enumerate(ALGO_ORDER)}).fillna(999))
+    return per_seed, summary.reset_index(drop=True)
+
+
+def build_stability_over_time(df: pd.DataFrame, bin_size: int, max_steps: int) -> pd.DataFrame:
+    if bin_size <= 0:
+        raise ValueError("stability bin size must be positive")
+
+    work = df.loc[df["steps"] <= max_steps, ["algo", "seed", "steps", "return_mean"]].copy()
+    if work.empty:
+        return pd.DataFrame(columns=["algo", "step_bin", "across_seed_iqr", "across_seed_std", "n_seeds"])
+
+    work["step_bin"] = (work["steps"] // bin_size) * bin_size
+
+    # If multiple evals from the same seed fall in one bin, collapse within-seed first.
+    per_seed_bin = (
+        work.groupby(["algo", "seed", "step_bin"], as_index=False)["return_mean"]
+        .mean()
+        .sort_values(["algo", "seed", "step_bin"])
+    )
+
+    rows: list[dict] = []
+    for (algo, step_bin), group in per_seed_bin.groupby(["algo", "step_bin"], sort=True):
+        values = group["return_mean"].to_numpy(dtype=np.float64)
+        rows.append(
+            {
+                "algo": str(algo),
+                "step_bin": int(step_bin),
+                "across_seed_iqr": float(np.percentile(values, 75) - np.percentile(values, 25)),
+                "across_seed_std": float(np.std(values, ddof=0)),
+                "n_seeds": int(len(values)),
+            }
+        )
+
+    out = pd.DataFrame(rows)
+    return out.sort_values(["algo", "step_bin"]).reset_index(drop=True)
+
+
+def build_summary(
+    df: pd.DataFrame,
+    agg: pd.DataFrame,
+    sample_eff_summary: pd.DataFrame,
+    stability_df: pd.DataFrame,
+    solved_threshold: float,
+    auc_cap_steps: int,
+) -> pd.DataFrame:
+    rows: list[dict] = []
+    algo_names = ordered_algorithms(df["algo"].unique())
+
     for algo in algo_names:
         algo_seed_df = df.loc[df["algo"] == algo].sort_values(["seed", "steps"])
         algo_agg = agg.loc[agg["algo"] == algo].sort_values("steps")
         final_per_seed = algo_seed_df.groupby("seed", as_index=False).tail(1).sort_values("seed")
         final_returns = final_per_seed["return_mean"].to_numpy(dtype=np.float64)
+        best_per_seed = (
+            algo_seed_df.groupby("seed", as_index=False)["return_mean"]
+            .max()
+            .rename(columns={"return_mean": "best_return"})
+            .sort_values("seed")
+        )
+        best_returns = best_per_seed["best_return"].to_numpy(dtype=np.float64)
+        best_to_final_drop = best_returns - final_returns
         solved_steps = np.array(
             [first_solved_step(seed_frame, solved_threshold) for _, seed_frame in algo_seed_df.groupby("seed")],
             dtype=np.float64,
         )
-        step_values = algo_agg["steps"].to_numpy(dtype=np.float64)
-        mean_values = algo_agg["mean"].to_numpy(dtype=np.float64)
 
-        auc = area_under_curve(step_values, mean_values)
-        max_step = float(step_values[-1]) if len(step_values) else float("nan")
-        normalized_auc = auc / max_step if (not math.isnan(max_step) and max_step > 0) else float("nan")
+        auc_row = sample_eff_summary.loc[sample_eff_summary["algo"] == algo]
+        auc_mean = float(auc_row["auc_mean"].iloc[0]) if not auc_row.empty else float("nan")
+        auc_std = float(auc_row["auc_std"].iloc[0]) if not auc_row.empty else float("nan")
+
+        stability_algo = stability_df.loc[stability_df["algo"] == algo]
+        mean_iqr = (
+            float(stability_algo["across_seed_iqr"].mean())
+            if not stability_algo.empty
+            else float("nan")
+        )
+
+        mean_values = algo_agg["mean"].to_numpy(dtype=np.float64)
+        max_step = int(algo_agg["steps"].max()) if len(algo_agg) else -1
 
         rows.append(
             {
@@ -286,28 +454,27 @@ def build_summary(df: pd.DataFrame, agg: pd.DataFrame, solved_threshold: float) 
                 "Final Return Mean": float(np.mean(final_returns)),
                 "Final Return Std": float(np.std(final_returns, ddof=0)),
                 "Final Return IQR": float(np.percentile(final_returns, 75) - np.percentile(final_returns, 25)),
+                "Best Return Mean": float(np.mean(best_returns)),
+                "Best Return Std": float(np.std(best_returns, ddof=0)),
+                "Best Return IQR": float(np.percentile(best_returns, 75) - np.percentile(best_returns, 25)),
+                "Mean Best-to-Final Drop": float(np.mean(best_to_final_drop)),
                 "Best Eval Mean": float(np.max(mean_values)) if len(mean_values) else float("nan"),
-                "AUC": auc,
-                "Normalized AUC": normalized_auc,
-                "Mean Seed Std": float(np.mean(algo_agg["seed_std"].to_numpy(dtype=np.float64))),
+                f"AUC <= {auc_cap_steps}": auc_mean,
+                f"AUC <= {auc_cap_steps} Std": auc_std,
+                "Mean Across-Seed IQR": mean_iqr,
                 "Solved Seed Fraction": float(np.mean(~np.isnan(solved_steps))),
                 "Median Steps to Solve": float(np.nanmedian(solved_steps)) if np.any(~np.isnan(solved_steps)) else float("nan"),
                 "Mean Steps to Solve": float(np.nanmean(solved_steps)) if np.any(~np.isnan(solved_steps)) else float("nan"),
-                "Last Eval Step": int(max_step) if not math.isnan(max_step) else -1,
+                "Last Eval Step": max_step,
             }
         )
+
     return pd.DataFrame(rows)
 
 
 def save_figure(fig: plt.Figure, stem: str, outdir: Path, formats: Sequence[str]) -> None:
     for fmt in formats:
         fig.savefig(outdir / f"{stem}.{fmt}", dpi=200, bbox_inches="tight")
-
-
-def ordered_algorithms(items: Iterable[str]) -> list[str]:
-    ordered = [name for name in COLORS if name in set(items)]
-    extras = sorted(set(items) - set(ordered))
-    return ordered + extras
 
 
 def plot_combined_learning_curves(
@@ -323,18 +490,21 @@ def plot_combined_learning_curves(
     fig, ax = plt.subplots(figsize=(10, 6))
     for algo in algos:
         algo_df = smoothed.loc[smoothed["algo"] == algo].sort_values("steps")
-        x = algo_df["steps"].to_numpy()
-        y = algo_df["mean"].to_numpy()
-        q25 = algo_df["q25"].to_numpy()
-        q75 = algo_df["q75"].to_numpy()
+        x = algo_df["steps"].to_numpy(dtype=np.float64)
+        y = algo_df["mean"].to_numpy(dtype=np.float64)
+        q25 = algo_df["q25"].to_numpy(dtype=np.float64)
+        q75 = algo_df["q75"].to_numpy(dtype=np.float64)
+        color = COLORS.get(algo, None)
 
-        ax.plot(x, y, lw=2.5, marker="o", ms=4, color=COLORS.get(algo, None), label=algo)
-        ax.fill_between(x, q25, q75, alpha=0.15, color=COLORS.get(algo, None))
+        ax.plot(x, y, lw=2.5, marker="o", ms=4, color=color, label=algo)
+        ax.fill_between(x, q25, q75, alpha=0.16, color=color)
 
-    ax.axhline(solved_threshold, color="gray", linestyle="--", alpha=0.7, label=f"Solved ({solved_threshold:.0f})")
-    ax.set_title("CartPole-v1 Learning Curves (evaluation-only, mean ± IQR across seeds)")
-    ax.set_xlabel("Environment Steps")
-    ax.set_ylabel("Evaluation Return")
+    ax.axhline(solved_threshold, color="gray", linestyle="--", alpha=0.8, label=f"Solved ({solved_threshold:.0f})")
+    ax.set_title("CartPole-v1 — learning curves (evals only)")
+    ax.set_xlabel("Steps")
+    ax.set_ylabel("Evaluation return")
+    ax.set_xlim(left=0)
+    ax.set_ylim(bottom=0)
     ax.grid(True, alpha=0.3)
     ax.legend(loc="lower right")
     fig.tight_layout()
@@ -342,145 +512,171 @@ def plot_combined_learning_curves(
     plt.close(fig)
 
 
-def plot_individual_learning_curves(
+def plot_algorithm_learning_curve(
+    df: pd.DataFrame,
     agg: pd.DataFrame,
+    algo: str,
     outdir: Path,
     formats: Sequence[str],
     solved_threshold: float,
     smooth_window: int,
 ) -> None:
-    algos = ordered_algorithms(agg["algo"].unique())
-    smoothed = smoothed_aggregate(agg, smooth_window)
-    fig, axes = plt.subplots(1, len(algos), figsize=(6 * len(algos), 5), squeeze=False)
+    algo_df = df.loc[df["algo"] == algo].sort_values(["seed", "steps"])
+    algo_agg = smoothed_aggregate(agg.loc[agg["algo"] == algo].sort_values("steps"), smooth_window)
+    color = COLORS.get(algo, None)
 
-    for ax, algo in zip(axes.flat, algos):
-        algo_df = smoothed.loc[smoothed["algo"] == algo].sort_values("steps")
-        x = algo_df["steps"].to_numpy()
-        y = algo_df["mean"].to_numpy()
-        q25 = algo_df["q25"].to_numpy()
-        q75 = algo_df["q75"].to_numpy()
+    fig, ax = plt.subplots(figsize=(10, 6))
 
-        ax.plot(x, y, lw=2.5, marker="o", ms=4, color=COLORS.get(algo, None))
-        ax.fill_between(x, q25, q75, alpha=0.2, color=COLORS.get(algo, None))
-        ax.axhline(solved_threshold, color="gray", linestyle="--", alpha=0.7)
-        ax.set_title(algo)
-        ax.set_xlabel("Environment Steps")
-        ax.set_ylabel("Evaluation Return")
-        ax.grid(True, alpha=0.3)
+    for idx, (seed, seed_frame) in enumerate(algo_df.groupby("seed", sort=True)):
+        label = "Seed traces" if idx == 0 else None
+        ax.plot(
+            seed_frame["steps"].to_numpy(dtype=np.float64),
+            seed_frame["return_mean"].to_numpy(dtype=np.float64),
+            lw=1.2,
+            marker="o",
+            ms=3,
+            alpha=0.25,
+            color=color,
+            label=label,
+        )
 
-    fig.suptitle("Per-Algorithm Learning Curves (evaluation-only, mean ± IQR)", fontsize=14)
-    fig.tight_layout(rect=[0, 0, 1, 0.95])
-    save_figure(fig, "learning_curves_individual", outdir, formats)
+    x = algo_agg["steps"].to_numpy(dtype=np.float64)
+    y = algo_agg["mean"].to_numpy(dtype=np.float64)
+    q25 = algo_agg["q25"].to_numpy(dtype=np.float64)
+    q75 = algo_agg["q75"].to_numpy(dtype=np.float64)
+    max_step = int(np.max(x)) if len(x) else 0
+
+    ax.fill_between(x, q25, q75, alpha=0.16, color=color, label="IQR across seeds")
+    ax.plot(x, y, lw=3.0, marker="o", ms=4, color=color, label=algo)
+    ax.axhline(solved_threshold, color="gray", linestyle="--", alpha=0.8)
+
+    title = f"{algo} — learning curve (evals only)"
+    if max_step > 0:
+        title += f" (≤ {max_step:,} steps)"
+    ax.set_title(title)
+    ax.set_xlabel("Steps")
+    ax.set_ylabel("Evaluation return")
+    ax.set_xlim(left=0)
+    ax.set_ylim(bottom=0)
+    ax.grid(True, alpha=0.3)
+    ax.legend(loc="best")
+    fig.tight_layout()
+
+    stem = f"learning_curve_{algo.replace(' ', '_')}"
+    save_figure(fig, stem, outdir, formats)
     plt.close(fig)
 
 
 def plot_final_performance(summary: pd.DataFrame, outdir: Path, formats: Sequence[str], solved_threshold: float) -> None:
     labels = summary["Algorithm"].tolist()
-    means = summary["Final Return Mean"].to_numpy(dtype=np.float64)
-    errs = summary["Final Return Std"].to_numpy(dtype=np.float64)
-
-    fig, ax = plt.subplots(figsize=(8, 5))
-    ax.bar(labels, means, yerr=errs, capsize=6, color=[COLORS.get(a, None) for a in labels], alpha=0.85)
-    ax.axhline(solved_threshold, color="gray", linestyle="--", alpha=0.7, label=f"Solved ({solved_threshold:.0f})")
-    ax.set_ylabel("Final Evaluation Return")
-    ax.set_title("Final Performance Across Seeds (mean ± std)")
+    terminal_means = summary["Final Return Mean"].to_numpy(dtype=np.float64)
+    terminal_errs = summary["Final Return Std"].to_numpy(dtype=np.float64)
+    best_means = summary["Best Return Mean"].to_numpy(dtype=np.float64)
+    best_errs = summary["Best Return Std"].to_numpy(dtype=np.float64)
+    x = np.arange(len(labels), dtype=np.float64)
+    width = 0.38
+    fig, ax = plt.subplots(figsize=(9, 5))
+    ax.bar(
+        x - width / 2,
+        terminal_means,
+        width=width,
+        yerr=terminal_errs,
+        capsize=6,
+        color=[COLORS.get(a, None) for a in labels],
+        alpha=0.9,
+        label="Terminal",
+    )
+    ax.bar(
+        x + width / 2,
+        best_means,
+        width=width,
+        yerr=best_errs,
+        capsize=6,
+        color=[COLORS.get(a, None) for a in labels],
+        alpha=0.35,
+        edgecolor="black",
+        linewidth=1.0,
+        hatch="//",
+        label="Best seen",
+    )
+    ax.axhline(solved_threshold, color="gray", linestyle="--", alpha=0.8, label=f"Solved ({solved_threshold:.0f})")
+    ax.set_xticks(x)
+    ax.set_xticklabels(labels)
+    ax.set_ylabel("Evaluation return")
+    ax.set_title("Terminal vs best-seen performance across seeds")
     ax.grid(axis="y", alpha=0.3)
     ax.legend(loc="lower right")
     fig.tight_layout()
-    save_figure(fig, "final_performance_bar", outdir, formats)
+    save_figure(fig, "terminal_vs_best_performance", outdir, formats)
     plt.close(fig)
 
 
-def plot_sample_efficiency(summary: pd.DataFrame, outdir: Path, formats: Sequence[str]) -> None:
-    labels = summary["Algorithm"].tolist()
-    aucs = summary["AUC"].to_numpy(dtype=np.float64)
-
-    fig, ax = plt.subplots(figsize=(8, 5))
-    ax.bar(labels, aucs, color=[COLORS.get(a, None) for a in labels], alpha=0.85)
-    ax.set_ylabel("Learning-Curve AUC")
-    ax.set_title("Sample Efficiency (higher is better)")
-    ax.grid(axis="y", alpha=0.3)
-    fig.tight_layout()
-    save_figure(fig, "sample_efficiency_bar", outdir, formats)
-    plt.close(fig)
-
-
-def plot_seed_stability(summary: pd.DataFrame, outdir: Path, formats: Sequence[str]) -> None:
-    labels = summary["Algorithm"].tolist()
-    stability = summary["Mean Seed Std"].to_numpy(dtype=np.float64)
-
-    fig, ax = plt.subplots(figsize=(8, 5))
-    ax.bar(labels, stability, color=[COLORS.get(a, None) for a in labels], alpha=0.85)
-    ax.set_ylabel("Mean Std of Eval Return Across Seeds")
-    ax.set_title("Stability Across Seeds (lower is better)")
-    ax.grid(axis="y", alpha=0.3)
-    fig.tight_layout()
-    save_figure(fig, "stability_across_seeds_bar", outdir, formats)
-    plt.close(fig)
-
-
-def plot_dashboard(
-    agg: pd.DataFrame,
-    summary: pd.DataFrame,
+def plot_sample_efficiency(
+    sample_eff_summary: pd.DataFrame,
+    cap_steps: int,
     outdir: Path,
     formats: Sequence[str],
-    solved_threshold: float,
-    smooth_window: int,
 ) -> None:
-    algos = summary["Algorithm"].tolist()
-    smoothed = smoothed_aggregate(agg, smooth_window)
+    labels = sample_eff_summary["algo"].tolist()
+    aucs = sample_eff_summary["auc_mean"].to_numpy(dtype=np.float64)
+    errs = sample_eff_summary["auc_std"].to_numpy(dtype=np.float64)
+    step_label = compact_steps_label(cap_steps)
 
-    fig, axes = plt.subplots(1, 3, figsize=(17, 5.5))
-
-    # Panel 1: combined learning curves
-    ax = axes[0]
-    for algo in algos:
-        algo_df = smoothed.loc[smoothed["algo"] == algo].sort_values("steps")
-        x = algo_df["steps"].to_numpy()
-        y = algo_df["mean"].to_numpy()
-        q25 = algo_df["q25"].to_numpy()
-        q75 = algo_df["q75"].to_numpy()
-        ax.plot(x, y, lw=2.2, color=COLORS.get(algo, None), label=algo)
-        ax.fill_between(x, q25, q75, alpha=0.12, color=COLORS.get(algo, None))
-    ax.axhline(solved_threshold, color="gray", linestyle="--", alpha=0.7)
-    ax.set_title("Learning Curves")
-    ax.set_xlabel("Environment Steps")
-    ax.set_ylabel("Evaluation Return")
-    ax.grid(True, alpha=0.3)
-    ax.legend(loc="lower right", fontsize=9)
-
-    # Panel 2: sample efficiency
-    ax = axes[1]
-    ax.bar(algos, summary["AUC"].to_numpy(dtype=np.float64), color=[COLORS.get(a, None) for a in algos], alpha=0.85)
-    ax.set_title("Sample Efficiency")
-    ax.set_ylabel("Learning-Curve AUC")
+    fig, ax = plt.subplots(figsize=(8, 5))
+    ax.bar(labels, aucs, yerr=errs, capsize=6, color=[COLORS.get(a, None) for a in labels], alpha=0.9)
+    ax.set_ylabel(f"AUC up to {step_label} (higher = better sample efficiency)")
+    ax.set_title(f"Sample efficiency (AUC ≤ {step_label})")
     ax.grid(axis="y", alpha=0.3)
-
-    # Panel 3: stability
-    ax = axes[2]
-    ax.bar(
-        algos,
-        summary["Mean Seed Std"].to_numpy(dtype=np.float64),
-        color=[COLORS.get(a, None) for a in algos],
-        alpha=0.85,
-    )
-    ax.set_title("Seed Stability")
-    ax.set_ylabel("Mean Std Across Seeds")
-    ax.grid(axis="y", alpha=0.3)
-
-    fig.suptitle("Chapter 4 CLI Case Study Summary", fontsize=15)
-    fig.tight_layout(rect=[0, 0, 1, 0.95])
-    save_figure(fig, "summary_dashboard", outdir, formats)
+    fig.tight_layout()
+    save_figure(fig, "sample_efficiency", outdir, formats)
     plt.close(fig)
 
 
-def print_summary(summary: pd.DataFrame) -> None:
+def plot_stability_over_time(
+    stability_df: pd.DataFrame,
+    bin_size: int,
+    outdir: Path,
+    formats: Sequence[str],
+) -> None:
+    algos = ordered_algorithms(stability_df["algo"].unique())
+    bin_label = compact_steps_label(bin_size)
+
+    fig, ax = plt.subplots(figsize=(10, 6))
+    for algo in algos:
+        algo_df = stability_df.loc[stability_df["algo"] == algo].sort_values("step_bin")
+        if algo_df.empty:
+            continue
+        ax.plot(
+            algo_df["step_bin"].to_numpy(dtype=np.float64),
+            algo_df["across_seed_iqr"].to_numpy(dtype=np.float64),
+            lw=2.2,
+            marker="o",
+            ms=4,
+            color=COLORS.get(algo, None),
+            label=algo,
+        )
+
+    ax.set_title("Stability over time (lower is more stable)")
+    ax.set_xlabel(f"Steps ({bin_label} bins)")
+    ax.set_ylabel("Across-seed IQR of eval return")
+    ax.set_xlim(left=0)
+    ax.set_ylim(bottom=0)
+    ax.grid(True, alpha=0.3)
+    ax.legend(loc="upper right")
+    fig.tight_layout()
+    save_figure(fig, "stability_over_time", outdir, formats)
+    plt.close(fig)
+
+
+def print_summary(summary: pd.DataFrame, auc_cap_steps: int) -> None:
+    auc_col = f"AUC <= {auc_cap_steps}"
     display_cols = [
         "Algorithm",
         "Final Return Mean",
-        "Final Return Std",
-        "AUC",
-        "Mean Seed Std",
+        "Best Return Mean",
+        "Mean Best-to-Final Drop",
+        auc_col,
+        "Mean Across-Seed IQR",
         "Solved Seed Fraction",
         "Median Steps to Solve",
     ]
@@ -488,40 +684,32 @@ def print_summary(summary: pd.DataFrame) -> None:
     print(summary[display_cols].to_string(index=False, float_format=lambda x: f"{x:0.3f}"))
 
 
-def patch_helper_compatibility() -> None:
-    """Compatibility patch for the current helper package.
-
-    The edited Chapter 4 helper zip uses ``random.choices`` in reinforce.py. If that
-    module forgot to import ``random``, we inject Python's standard ``random`` module
-    so the CLI still runs cleanly.
-    """
-    import rlbook.algorithms.deep.reinforce as reinforce_module
-
-    if not hasattr(reinforce_module, "random"):
-        reinforce_module.random = pyrandom
-
-
 def build_run_config(args: argparse.Namespace):
     from rlbook.algorithms.deep import RunConfig
-
-    episodes = 500 if args.quick else args.episodes
-    steps_per_episode = 200 if args.quick else args.steps_per_episode
-    eval_every_steps = 2_000 if args.quick else args.eval_every_steps
-    eval_episodes = 3 if args.quick else args.eval_episodes
-    total_step_budget = 10_000 if args.quick else args.total_step_budget
-
+    
+    if args.smoke_test:
+        return RunConfig(
+            gamma=args.gamma,
+            episodes=SMOKE_EPISODES,
+            steps_per_episode=SMOKE_STEPS_PER_EPISODE,
+            eval_every_steps=SMOKE_EVAL_EVERY_STEPS,
+            eval_episodes=SMOKE_EVAL_EPISODES,
+            total_step_budget=SMOKE_TOTAL_STEP_BUDGET,
+        )
+    
     return RunConfig(
         gamma=args.gamma,
-        episodes=episodes,
-        steps_per_episode=steps_per_episode,
-        eval_every_steps=eval_every_steps,
-        eval_episodes=eval_episodes,
-        total_step_budget=total_step_budget,
+        episodes=args.episodes,
+        steps_per_episode=args.steps_per_episode,
+        eval_every_steps=args.eval_every_steps,
+        eval_episodes=args.eval_episodes,
+        total_step_budget=args.total_step_budget,
     )
 
-
-def build_dqn_config(args: argparse.Namespace):
+def build_dqn_config(args: argparse.Namespace, run_cfg, *, double_dqn: bool):
     from rlbook.algorithms.deep import DQNConfig
+
+    eps_decay_steps = int(args.eps_decay_steps)
 
     return DQNConfig(
         gamma=args.gamma,
@@ -531,8 +719,8 @@ def build_dqn_config(args: argparse.Namespace):
         target_sync_every=args.dqn_target_sync_every,
         eps_start=args.eps_start,
         eps_end=args.eps_end,
-        eps_decay_steps=args.eps_decay_steps,
-        double_dqn=False,
+        eps_decay_steps=eps_decay_steps,
+        double_dqn=bool(double_dqn),
     )
 
 
@@ -540,10 +728,9 @@ def run_experiments(args: argparse.Namespace) -> list[dict]:
     from rlbook.environments import CartPoleWrapper
     from rlbook.algorithms.deep import run_actor_critic, run_dqn, run_reinforce
 
-    patch_helper_compatibility()
-
     run_cfg = build_run_config(args)
-    dqn_cfg = build_dqn_config(args)
+    dqn_cfg = build_dqn_config(args, run_cfg, double_dqn=False)
+    ddqn_cfg = build_dqn_config(args, run_cfg, double_dqn=True) if args.include_double_dqn else None
 
     all_logs: list[dict] = []
     total_jobs = len(args.seeds) * (4 if args.include_double_dqn else 3)
@@ -582,22 +769,9 @@ def run_experiments(args: argparse.Namespace) -> list[dict]:
             env.close()
 
         if args.include_double_dqn:
-            from rlbook.algorithms.deep import DQNConfig, run_dqn
-
             job_idx += 1
             print(f"[{job_idx}/{total_jobs}] Double DQN")
             env = CartPoleWrapper(seed=seed)
-            ddqn_cfg = DQNConfig(
-                gamma=args.gamma,
-                lr=args.dqn_lr,
-                replay_capacity=args.dqn_replay_capacity,
-                batch_size=args.dqn_batch_size,
-                target_sync_every=args.dqn_target_sync_every,
-                eps_start=args.eps_start,
-                eps_end=args.eps_end,
-                eps_decay_steps=args.eps_decay_steps,
-                double_dqn=True,
-            )
             all_logs.extend(run_dqn(seed, env, run_cfg, ddqn_cfg))
             if hasattr(env, "close"):
                 env.close()
@@ -609,11 +783,15 @@ def save_metadata(args: argparse.Namespace, outdir: Path) -> None:
     metadata = {
         "seeds": list(map(int, args.seeds)),
         "include_double_dqn": bool(args.include_double_dqn),
-        "quick": bool(args.quick),
+        "smoke_test": bool(args.smoke_test),
         "smooth_window": int(args.smooth_window),
         "solved_threshold": float(args.solved_threshold),
+        "auc_cap_steps": int(args.auc_cap_steps),
+        "stability_bin_size": int(args.stability_bin_size),
+        "stability_max_steps": None if args.stability_max_steps is None else int(args.stability_max_steps),
         "run_config": None,
         "dqn_config": None,
+        "double_dqn_config": None,
         "learning_rates": {
             "reinforce_lr": float(args.reinforce_lr),
             "actor_lr": float(args.actor_lr),
@@ -622,10 +800,12 @@ def save_metadata(args: argparse.Namespace, outdir: Path) -> None:
     }
 
     if not args.no_run:
-        # Only materialize these configs when the helper package is expected to be importable.
         try:
-            metadata["run_config"] = asdict(build_run_config(args))
-            metadata["dqn_config"] = asdict(build_dqn_config(args))
+            run_cfg = build_run_config(args)
+            metadata["run_config"] = asdict(run_cfg)
+            metadata["dqn_config"] = asdict(build_dqn_config(args, run_cfg, double_dqn=False))
+            if args.include_double_dqn:
+                metadata["double_dqn_config"] = asdict(build_dqn_config(args, run_cfg, double_dqn=True))
         except Exception as exc:  # pragma: no cover - defensive only
             metadata["config_error"] = f"{type(exc).__name__}: {exc}"
 
@@ -653,10 +833,29 @@ def main() -> None:
 
     df = records_to_frame(records)
     agg = aggregate_evals(df)
-    summary = build_summary(df, agg, solved_threshold=args.solved_threshold)
+
+    auc_cap_steps = resolve_plot_cap(df, args.auc_cap_steps)
+    stability_max_steps = (
+        int(df["steps"].max())
+        if args.stability_max_steps is None
+        else resolve_plot_cap(df, args.stability_max_steps)
+    )
+    sample_eff_per_seed, sample_eff_summary = build_sample_efficiency(df, auc_cap_steps)
+    stability_df = build_stability_over_time(df, args.stability_bin_size, stability_max_steps)
+    summary = build_summary(
+        df,
+        agg,
+        sample_eff_summary=sample_eff_summary,
+        stability_df=stability_df,
+        solved_threshold=args.solved_threshold,
+        auc_cap_steps=auc_cap_steps,
+    )
 
     df.to_csv(run_dir / "eval_logs.csv", index=False)
     agg.to_csv(run_dir / "eval_curves_aggregated.csv", index=False)
+    sample_eff_per_seed.to_csv(run_dir / "sample_efficiency_per_seed.csv", index=False)
+    sample_eff_summary.to_csv(run_dir / "sample_efficiency_summary.csv", index=False)
+    stability_df.to_csv(run_dir / "stability_over_time.csv", index=False)
     summary.to_csv(run_dir / "summary.csv", index=False)
 
     plot_combined_learning_curves(
@@ -666,31 +865,36 @@ def main() -> None:
         solved_threshold=args.solved_threshold,
         smooth_window=args.smooth_window,
     )
-    plot_individual_learning_curves(
-        agg,
-        outdir=run_dir,
-        formats=formats,
-        solved_threshold=args.solved_threshold,
-        smooth_window=args.smooth_window,
-    )
+    for algo in ordered_algorithms(df["algo"].unique()):
+        plot_algorithm_learning_curve(
+            df,
+            agg,
+            algo=algo,
+            outdir=run_dir,
+            formats=formats,
+            solved_threshold=args.solved_threshold,
+            smooth_window=args.smooth_window,
+        )
     plot_final_performance(
         summary,
         outdir=run_dir,
         formats=formats,
         solved_threshold=args.solved_threshold,
     )
-    plot_sample_efficiency(summary, outdir=run_dir, formats=formats)
-    plot_seed_stability(summary, outdir=run_dir, formats=formats)
-    plot_dashboard(
-        agg,
-        summary,
+    plot_sample_efficiency(
+        sample_eff_summary,
+        cap_steps=auc_cap_steps,
         outdir=run_dir,
         formats=formats,
-        solved_threshold=args.solved_threshold,
-        smooth_window=args.smooth_window,
+    )
+    plot_stability_over_time(
+        stability_df,
+        bin_size=args.stability_bin_size,
+        outdir=run_dir,
+        formats=formats,
     )
 
-    print_summary(summary)
+    print_summary(summary, auc_cap_steps=auc_cap_steps)
     print(f"\nArtifacts written to: {run_dir}")
 
 

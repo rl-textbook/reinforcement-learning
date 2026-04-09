@@ -8,6 +8,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from torch.distributions import Categorical
 
 from rlbook.environments.cartpole_wrapper import CartPoleWrapper
 
@@ -33,13 +34,10 @@ class PolicyNet(nn.Module):
 def sample_action_and_logp(policy: PolicyNet, s, n_actions: int | None = None):
     """Sample an action and return its differentiable log-probability."""
     s_t = torch.as_tensor(s, dtype=torch.float32, device=DEVICE).unsqueeze(0)
-    with torch.no_grad():
-        probs = policy(s_t) # probabilities used for sampling
-    p = probs.squeeze(0).detach().cpu().numpy()
-    a = int(random.choices(range(n_actions), weights=p, k=1)[0])
-    # Recompute with gradients on so log pi(a|s) stays attached to theta
-    probs = policy(s_t)
-    logp = torch.log(probs[0, a].clamp_min(1e-8))
+    probs = policy(s_t).squeeze(0) # probabilities used for sampling
+    dist = Categorical(probs=probs)
+    a = int(dist.sample().item())
+    logp = dist.log_prob(torch.tensor(a, device=DEVICE, dtype=torch.int64))
     return a, logp
 
 

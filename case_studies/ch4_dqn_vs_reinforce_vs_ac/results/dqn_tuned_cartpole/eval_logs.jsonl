@@ -1,0 +1,360 @@
+{"algo": "REINFORCE", "seed": 101, "steps": 5000, "return_mean": 96.9000015258789, "return_iqr": 59.75, "loss": 5.766267776489258}
+{"algo": "REINFORCE", "seed": 101, "steps": 10000, "return_mean": 459.70001220703125, "return_iqr": 57.0, "loss": 10.633362770080566}
+{"algo": "REINFORCE", "seed": 101, "steps": 15000, "return_mean": 492.6000061035156, "return_iqr": 0.0, "loss": 3.788381814956665}
+{"algo": "REINFORCE", "seed": 101, "steps": 20000, "return_mean": 468.20001220703125, "return_iqr": 48.0, "loss": 8.512073516845703}
+{"algo": "REINFORCE", "seed": 101, "steps": 25000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 3.9204189777374268}
+{"algo": "REINFORCE", "seed": 101, "steps": 30000, "return_mean": 227.60000610351562, "return_iqr": 24.75, "loss": -2.5933845043182373}
+{"algo": "REINFORCE", "seed": 101, "steps": 35000, "return_mean": 243.3000030517578, "return_iqr": 25.25, "loss": 0.6443660259246826}
+{"algo": "REINFORCE", "seed": 101, "steps": 40000, "return_mean": 492.5, "return_iqr": 0.0, "loss": 6.603236675262451}
+{"algo": "REINFORCE", "seed": 101, "steps": 45000, "return_mean": 454.20001220703125, "return_iqr": 82.25, "loss": 3.0255942344665527}
+{"algo": "REINFORCE", "seed": 101, "steps": 50000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 1.6538383960723877}
+{"algo": "REINFORCE", "seed": 101, "steps": 55000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 1.2481509447097778}
+{"algo": "REINFORCE", "seed": 101, "steps": 60000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 0.6771495342254639}
+{"algo": "REINFORCE", "seed": 101, "steps": 65000, "return_mean": 308.6000061035156, "return_iqr": 61.5, "loss": -0.7209532856941223}
+{"algo": "REINFORCE", "seed": 101, "steps": 70000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 4.001784801483154}
+{"algo": "REINFORCE", "seed": 101, "steps": 75000, "return_mean": 500.0, "return_iqr": 0.0, "loss": -7.088981628417969}
+{"algo": "REINFORCE", "seed": 101, "steps": 80000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 2.573286533355713}
+{"algo": "REINFORCE", "seed": 101, "steps": 85000, "return_mean": 500.0, "return_iqr": 0.0, "loss": -1.4739114046096802}
+{"algo": "REINFORCE", "seed": 101, "steps": 90000, "return_mean": 500.0, "return_iqr": 0.0, "loss": -4.39641809463501}
+{"algo": "REINFORCE", "seed": 101, "steps": 95000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 1.11459219455719}
+{"algo": "REINFORCE", "seed": 101, "steps": 100000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 0.6362214088439941}
+{"algo": "REINFORCE", "seed": 101, "steps": 105000, "return_mean": 500.0, "return_iqr": 0.0, "loss": -0.005502838175743818}
+{"algo": "REINFORCE", "seed": 101, "steps": 110000, "return_mean": 497.0, "return_iqr": 0.0, "loss": -0.1781914085149765}
+{"algo": "REINFORCE", "seed": 101, "steps": 115000, "return_mean": 458.0, "return_iqr": 99.0, "loss": -2.095871925354004}
+{"algo": "REINFORCE", "seed": 101, "steps": 120000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 0.6731273531913757}
+{"algo": "REINFORCE", "seed": 101, "steps": 125000, "return_mean": 500.0, "return_iqr": 0.0, "loss": -0.17370203137397766}
+{"algo": "REINFORCE", "seed": 101, "steps": 130000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 0.18220268189907074}
+{"algo": "REINFORCE", "seed": 101, "steps": 135000, "return_mean": 446.79998779296875, "return_iqr": 103.0, "loss": -2.1971960067749023}
+{"algo": "REINFORCE", "seed": 101, "steps": 140000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 1.4595078229904175}
+{"algo": "REINFORCE", "seed": 101, "steps": 145000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 0.553312361240387}
+{"algo": "REINFORCE", "seed": 101, "steps": 150000, "return_mean": 469.79998779296875, "return_iqr": 67.25, "loss": 0.7712489366531372}
+{"algo": "REINFORCE", "seed": 101, "steps": 155000, "return_mean": 465.79998779296875, "return_iqr": 47.0, "loss": -1.086229920387268}
+{"algo": "REINFORCE", "seed": 101, "steps": 160000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 0.39067426323890686}
+{"algo": "REINFORCE", "seed": 101, "steps": 165000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 0.47589242458343506}
+{"algo": "REINFORCE", "seed": 101, "steps": 170000, "return_mean": 500.0, "return_iqr": 0.0, "loss": -0.6485241055488586}
+{"algo": "REINFORCE", "seed": 101, "steps": 175000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 0.6393318772315979}
+{"algo": "REINFORCE", "seed": 101, "steps": 180000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 1.1643650531768799}
+{"algo": "REINFORCE", "seed": 101, "steps": 185000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 2.9403235912323}
+{"algo": "REINFORCE", "seed": 101, "steps": 190000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 1.5333895683288574}
+{"algo": "REINFORCE", "seed": 101, "steps": 195000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 1.187975287437439}
+{"algo": "REINFORCE", "seed": 101, "steps": 200000, "return_mean": 500.0, "return_iqr": 0.0, "loss": -4.390518665313721}
+{"algo": "ActorCritic", "seed": 101, "steps": 5000, "return_mean": 213.0, "return_iqr": 116.0, "actor_loss": 0.041597187519073486, "critic_loss": 1.192920207977295, "delta": 1.0922088623046875}
+{"algo": "ActorCritic", "seed": 101, "steps": 10000, "return_mean": 173.0, "return_iqr": 124.75, "actor_loss": 0.3464462161064148, "critic_loss": 0.043834056705236435, "delta": 0.2093658447265625}
+{"algo": "ActorCritic", "seed": 101, "steps": 15000, "return_mean": 167.1999969482422, "return_iqr": 20.0, "actor_loss": -0.004184565972536802, "critic_loss": 0.00038057618075981736, "delta": -0.01950836181640625}
+{"algo": "ActorCritic", "seed": 101, "steps": 20000, "return_mean": 205.60000610351562, "return_iqr": 11.5, "actor_loss": 0.037867240607738495, "critic_loss": 2.612994909286499, "delta": 1.616476058959961}
+{"algo": "ActorCritic", "seed": 101, "steps": 25000, "return_mean": 233.0, "return_iqr": 14.0, "actor_loss": 0.09580685943365097, "critic_loss": 0.03388900309801102, "delta": 0.18408966064453125}
+{"algo": "ActorCritic", "seed": 101, "steps": 30000, "return_mean": 451.5, "return_iqr": 110.0, "actor_loss": -0.23731856048107147, "critic_loss": 0.03426927700638771, "delta": -0.18511962890625}
+{"algo": "ActorCritic", "seed": 101, "steps": 35000, "return_mean": 206.60000610351562, "return_iqr": 8.0, "actor_loss": -0.0303766168653965, "critic_loss": 0.1947317272424698, "delta": -0.4412841796875}
+{"algo": "ActorCritic", "seed": 101, "steps": 40000, "return_mean": 280.3999938964844, "return_iqr": 13.25, "actor_loss": 0.010519820265471935, "critic_loss": 0.000664987601339817, "delta": 0.025787353515625}
+{"algo": "ActorCritic", "seed": 101, "steps": 45000, "return_mean": 402.29998779296875, "return_iqr": 17.75, "actor_loss": 0.2298782467842102, "critic_loss": 0.07096049934625626, "delta": 0.2663841247558594}
+{"algo": "ActorCritic", "seed": 101, "steps": 50000, "return_mean": 177.1999969482422, "return_iqr": 9.75, "actor_loss": 0.0011993711814284325, "critic_loss": 0.308347225189209, "delta": 0.5552902221679688}
+{"algo": "ActorCritic", "seed": 101, "steps": 55000, "return_mean": 132.1999969482422, "return_iqr": 3.75, "actor_loss": 0.007180860266089439, "critic_loss": 0.05384407564997673, "delta": 0.23204326629638672}
+{"algo": "ActorCritic", "seed": 101, "steps": 60000, "return_mean": 500.0, "return_iqr": 0.0, "actor_loss": 0.0017751770792528987, "critic_loss": 0.03360868617892265, "delta": 0.18332672119140625}
+{"algo": "ActorCritic", "seed": 101, "steps": 65000, "return_mean": 200.60000610351562, "return_iqr": 10.25, "actor_loss": 0.0001170060204458423, "critic_loss": 0.003649313235655427, "delta": 0.0604095458984375}
+{"algo": "ActorCritic", "seed": 101, "steps": 70000, "return_mean": 462.3999938964844, "return_iqr": 50.25, "actor_loss": -8.493720815749839e-05, "critic_loss": 0.026131242513656616, "delta": -0.161651611328125}
+{"algo": "ActorCritic", "seed": 101, "steps": 75000, "return_mean": 207.6999969482422, "return_iqr": 6.75, "actor_loss": -0.0002793672611005604, "critic_loss": 0.004758927971124649, "delta": -0.0689849853515625}
+{"algo": "ActorCritic", "seed": 101, "steps": 80000, "return_mean": 418.6000061035156, "return_iqr": 115.5, "actor_loss": -0.003885155078023672, "critic_loss": 0.002752822358161211, "delta": -0.05246734619140625}
+{"algo": "ActorCritic", "seed": 101, "steps": 85000, "return_mean": 9.399999618530273, "return_iqr": 1.0, "actor_loss": 2.0111079379603325e-07, "critic_loss": 0.00588036235421896, "delta": 0.07668352127075195}
+{"algo": "ActorCritic", "seed": 101, "steps": 90000, "return_mean": 9.399999618530273, "return_iqr": 1.0, "actor_loss": -3.285082925685856e-07, "critic_loss": 0.007416019681841135, "delta": -0.08611631393432617}
+{"algo": "ActorCritic", "seed": 101, "steps": 95000, "return_mean": 9.5, "return_iqr": 1.0, "actor_loss": -2.088063774863258e-05, "critic_loss": 0.007796509191393852, "delta": -0.08829784393310547}
+{"algo": "ActorCritic", "seed": 101, "steps": 100000, "return_mean": 9.600000381469727, "return_iqr": 1.0, "actor_loss": 0.00013774001854471862, "critic_loss": 0.5276554226875305, "delta": 0.7263989448547363}
+{"algo": "ActorCritic", "seed": 101, "steps": 105000, "return_mean": 9.399999618530273, "return_iqr": 1.75, "actor_loss": -2.4597201786491496e-07, "critic_loss": 0.008796395733952522, "delta": -0.09378910064697266}
+{"algo": "ActorCritic", "seed": 101, "steps": 110000, "return_mean": 9.5, "return_iqr": 1.0, "actor_loss": -5.632614019646098e-08, "critic_loss": 2.3007398795016343e-06, "delta": -0.0015168190002441406}
+{"algo": "ActorCritic", "seed": 101, "steps": 115000, "return_mean": 9.399999618530273, "return_iqr": 1.0, "actor_loss": 2.3683286443088036e-08, "critic_loss": 3.8544476410606876e-05, "delta": 0.0062084197998046875}
+{"algo": "ActorCritic", "seed": 101, "steps": 120000, "return_mean": 500.0, "return_iqr": 0.0, "actor_loss": 0.5896751880645752, "critic_loss": 1.3897731304168701, "delta": 1.1788864135742188}
+{"algo": "ActorCritic", "seed": 101, "steps": 125000, "return_mean": 500.0, "return_iqr": 0.0, "actor_loss": -0.22204965353012085, "critic_loss": 1.3254356384277344, "delta": -1.151275634765625}
+{"algo": "ActorCritic", "seed": 101, "steps": 130000, "return_mean": 322.0, "return_iqr": 6.25, "actor_loss": -0.4501619040966034, "critic_loss": 0.2055574208498001, "delta": -0.4533843994140625}
+{"algo": "ActorCritic", "seed": 101, "steps": 135000, "return_mean": 96.0999984741211, "return_iqr": 20.25, "actor_loss": -0.00010683071741368622, "critic_loss": 0.025924459099769592, "delta": -0.1610107421875}
+{"algo": "ActorCritic", "seed": 101, "steps": 140000, "return_mean": 170.8000030517578, "return_iqr": 24.75, "actor_loss": 0.00018429764895699918, "critic_loss": 0.17399385571479797, "delta": 0.4171257019042969}
+{"algo": "ActorCritic", "seed": 101, "steps": 145000, "return_mean": 127.5, "return_iqr": 11.0, "actor_loss": 8.557944966014475e-05, "critic_loss": 0.06280937045812607, "delta": 0.25061798095703125}
+{"algo": "ActorCritic", "seed": 101, "steps": 150000, "return_mean": 129.10000610351562, "return_iqr": 12.75, "actor_loss": -1.1492981910705566, "critic_loss": 17.5971736907959, "delta": -4.19489860534668}
+{"algo": "ActorCritic", "seed": 101, "steps": 155000, "return_mean": 18.799999237060547, "return_iqr": 1.75, "actor_loss": 0.007873733527958393, "critic_loss": 2.056941509246826, "delta": 1.4342041015625}
+{"algo": "ActorCritic", "seed": 101, "steps": 160000, "return_mean": 101.4000015258789, "return_iqr": 3.5, "actor_loss": 0.30985385179519653, "critic_loss": 1.5904403924942017, "delta": 1.2611266374588013}
+{"algo": "ActorCritic", "seed": 101, "steps": 165000, "return_mean": 85.0, "return_iqr": 6.75, "actor_loss": 3.131531912003993e-06, "critic_loss": 0.0748765841126442, "delta": 0.2736358642578125}
+{"algo": "ActorCritic", "seed": 101, "steps": 170000, "return_mean": 127.80000305175781, "return_iqr": 25.75, "actor_loss": 4.854050075664418e-06, "critic_loss": 0.03504761680960655, "delta": 0.1872100830078125}
+{"algo": "ActorCritic", "seed": 101, "steps": 175000, "return_mean": 273.20001220703125, "return_iqr": 166.25, "actor_loss": 1.1680641343048137e-08, "critic_loss": 0.0042670778930187225, "delta": 0.0653228759765625}
+{"algo": "ActorCritic", "seed": 101, "steps": 180000, "return_mean": 295.1000061035156, "return_iqr": 155.25, "actor_loss": -4.104538311366923e-05, "critic_loss": 0.0002640823367983103, "delta": -0.0162506103515625}
+{"algo": "ActorCritic", "seed": 101, "steps": 185000, "return_mean": 500.0, "return_iqr": 0.0, "actor_loss": 0.20283474028110504, "critic_loss": 0.1507575958967209, "delta": 0.388275146484375}
+{"algo": "ActorCritic", "seed": 101, "steps": 190000, "return_mean": 349.5, "return_iqr": 34.75, "actor_loss": -0.013023690320551395, "critic_loss": 0.0006860057474114001, "delta": -0.02619171142578125}
+{"algo": "ActorCritic", "seed": 101, "steps": 195000, "return_mean": 283.0, "return_iqr": 11.5, "actor_loss": 0.006045504938811064, "critic_loss": 0.003314467379823327, "delta": 0.0575714111328125}
+{"algo": "ActorCritic", "seed": 101, "steps": 200000, "return_mean": 412.5, "return_iqr": 38.25, "actor_loss": 0.0004402377235237509, "critic_loss": 0.01264492329210043, "delta": 0.11244964599609375}
+{"algo": "DQN", "seed": 101, "steps": 5000, "return_mean": 81.5, "return_iqr": 13.5, "epsilon": 0.9802, "replay_size": 5000}
+{"algo": "DQN", "seed": 101, "steps": 10000, "return_mean": 144.8000030517578, "return_iqr": 3.75, "epsilon": 0.95545, "replay_size": 10000}
+{"algo": "DQN", "seed": 101, "steps": 15000, "return_mean": 65.9000015258789, "return_iqr": 6.0, "epsilon": 0.9307, "replay_size": 15000}
+{"algo": "DQN", "seed": 101, "steps": 20000, "return_mean": 48.79999923706055, "return_iqr": 5.25, "epsilon": 0.90595, "replay_size": 20000}
+{"algo": "DQN", "seed": 101, "steps": 25000, "return_mean": 39.599998474121094, "return_iqr": 31.25, "epsilon": 0.8812, "replay_size": 20000}
+{"algo": "DQN", "seed": 101, "steps": 30000, "return_mean": 82.4000015258789, "return_iqr": 5.0, "epsilon": 0.85645, "replay_size": 20000}
+{"algo": "DQN", "seed": 101, "steps": 35000, "return_mean": 135.1999969482422, "return_iqr": 3.25, "epsilon": 0.8317, "replay_size": 20000}
+{"algo": "DQN", "seed": 101, "steps": 40000, "return_mean": 500.0, "return_iqr": 0.0, "epsilon": 0.8069500000000001, "replay_size": 20000}
+{"algo": "DQN", "seed": 101, "steps": 45000, "return_mean": 96.80000305175781, "return_iqr": 4.75, "epsilon": 0.7822, "replay_size": 20000}
+{"algo": "DQN", "seed": 101, "steps": 50000, "return_mean": 58.5, "return_iqr": 3.5, "epsilon": 0.75745, "replay_size": 20000}
+{"algo": "DQN", "seed": 101, "steps": 55000, "return_mean": 227.8000030517578, "return_iqr": 2.75, "epsilon": 0.7326999999999999, "replay_size": 20000}
+{"algo": "DQN", "seed": 101, "steps": 60000, "return_mean": 90.5, "return_iqr": 3.5, "epsilon": 0.7079500000000001, "replay_size": 20000}
+{"algo": "DQN", "seed": 101, "steps": 65000, "return_mean": 62.79999923706055, "return_iqr": 6.5, "epsilon": 0.6832, "replay_size": 20000}
+{"algo": "DQN", "seed": 101, "steps": 70000, "return_mean": 66.30000305175781, "return_iqr": 5.0, "epsilon": 0.65845, "replay_size": 20000}
+{"algo": "DQN", "seed": 101, "steps": 75000, "return_mean": 65.5999984741211, "return_iqr": 3.5, "epsilon": 0.6336999999999999, "replay_size": 20000}
+{"algo": "DQN", "seed": 101, "steps": 80000, "return_mean": 64.0, "return_iqr": 3.5, "epsilon": 0.60895, "replay_size": 20000}
+{"algo": "DQN", "seed": 101, "steps": 85000, "return_mean": 70.19999694824219, "return_iqr": 6.25, "epsilon": 0.5842, "replay_size": 20000}
+{"algo": "DQN", "seed": 101, "steps": 90000, "return_mean": 90.0999984741211, "return_iqr": 1.0, "epsilon": 0.55945, "replay_size": 20000}
+{"algo": "DQN", "seed": 101, "steps": 95000, "return_mean": 89.9000015258789, "return_iqr": 2.75, "epsilon": 0.5347, "replay_size": 20000}
+{"algo": "DQN", "seed": 101, "steps": 100000, "return_mean": 89.0999984741211, "return_iqr": 1.0, "epsilon": 0.50995, "replay_size": 20000}
+{"algo": "DQN", "seed": 101, "steps": 105000, "return_mean": 90.0, "return_iqr": 5.0, "epsilon": 0.48519999999999996, "replay_size": 20000}
+{"algo": "DQN", "seed": 101, "steps": 110000, "return_mean": 65.30000305175781, "return_iqr": 6.5, "epsilon": 0.4604499999999999, "replay_size": 20000}
+{"algo": "DQN", "seed": 101, "steps": 115000, "return_mean": 83.5, "return_iqr": 13.0, "epsilon": 0.4357000000000001, "replay_size": 20000}
+{"algo": "DQN", "seed": 101, "steps": 120000, "return_mean": 90.69999694824219, "return_iqr": 4.0, "epsilon": 0.41095000000000004, "replay_size": 20000}
+{"algo": "DQN", "seed": 101, "steps": 125000, "return_mean": 89.5, "return_iqr": 3.5, "epsilon": 0.3862, "replay_size": 20000}
+{"algo": "DQN", "seed": 101, "steps": 130000, "return_mean": 88.4000015258789, "return_iqr": 3.5, "epsilon": 0.36144999999999994, "replay_size": 20000}
+{"algo": "DQN", "seed": 101, "steps": 135000, "return_mean": 88.9000015258789, "return_iqr": 2.25, "epsilon": 0.3367, "replay_size": 20000}
+{"algo": "DQN", "seed": 101, "steps": 140000, "return_mean": 88.69999694824219, "return_iqr": 4.0, "epsilon": 0.31195000000000006, "replay_size": 20000}
+{"algo": "DQN", "seed": 101, "steps": 145000, "return_mean": 89.5, "return_iqr": 4.25, "epsilon": 0.2872, "replay_size": 20000}
+{"algo": "DQN", "seed": 101, "steps": 150000, "return_mean": 88.30000305175781, "return_iqr": 4.25, "epsilon": 0.26244999999999996, "replay_size": 20000}
+{"algo": "DQN", "seed": 101, "steps": 155000, "return_mean": 89.69999694824219, "return_iqr": 2.75, "epsilon": 0.23770000000000002, "replay_size": 20000}
+{"algo": "DQN", "seed": 101, "steps": 160000, "return_mean": 129.10000610351562, "return_iqr": 73.75, "epsilon": 0.21294999999999997, "replay_size": 20000}
+{"algo": "DQN", "seed": 101, "steps": 165000, "return_mean": 246.10000610351562, "return_iqr": 12.5, "epsilon": 0.18820000000000003, "replay_size": 20000}
+{"algo": "DQN", "seed": 101, "steps": 170000, "return_mean": 436.6000061035156, "return_iqr": 6.5, "epsilon": 0.16344999999999998, "replay_size": 20000}
+{"algo": "DQN", "seed": 101, "steps": 175000, "return_mean": 211.3000030517578, "return_iqr": 8.25, "epsilon": 0.13870000000000005, "replay_size": 20000}
+{"algo": "DQN", "seed": 101, "steps": 180000, "return_mean": 163.5, "return_iqr": 123.5, "epsilon": 0.11395, "replay_size": 20000}
+{"algo": "DQN", "seed": 101, "steps": 185000, "return_mean": 126.30000305175781, "return_iqr": 72.0, "epsilon": 0.08919999999999995, "replay_size": 20000}
+{"algo": "DQN", "seed": 101, "steps": 190000, "return_mean": 134.1999969482422, "return_iqr": 4.75, "epsilon": 0.06445000000000001, "replay_size": 20000}
+{"algo": "DQN", "seed": 101, "steps": 195000, "return_mean": 38.400001525878906, "return_iqr": 5.0, "epsilon": 0.03970000000000007, "replay_size": 20000}
+{"algo": "DQN", "seed": 101, "steps": 200000, "return_mean": 37.20000076293945, "return_iqr": 21.75, "epsilon": 0.014950000000000019, "replay_size": 20000}
+{"algo": "REINFORCE", "seed": 202, "steps": 5000, "return_mean": 168.3000030517578, "return_iqr": 22.75, "loss": 6.137716293334961}
+{"algo": "REINFORCE", "seed": 202, "steps": 10000, "return_mean": 133.60000610351562, "return_iqr": 16.0, "loss": -1.5796623229980469}
+{"algo": "REINFORCE", "seed": 202, "steps": 15000, "return_mean": 293.79998779296875, "return_iqr": 234.0, "loss": 7.139484882354736}
+{"algo": "REINFORCE", "seed": 202, "steps": 20000, "return_mean": 281.79998779296875, "return_iqr": 126.0, "loss": 5.0040764808654785}
+{"algo": "REINFORCE", "seed": 202, "steps": 25000, "return_mean": 185.0, "return_iqr": 12.5, "loss": 10.129549980163574}
+{"algo": "REINFORCE", "seed": 202, "steps": 30000, "return_mean": 484.29998779296875, "return_iqr": 0.0, "loss": 5.403059005737305}
+{"algo": "REINFORCE", "seed": 202, "steps": 35000, "return_mean": 477.3999938964844, "return_iqr": 0.0, "loss": -8.83884334564209}
+{"algo": "REINFORCE", "seed": 202, "steps": 40000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 4.227462291717529}
+{"algo": "REINFORCE", "seed": 202, "steps": 45000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 5.1334710121154785}
+{"algo": "REINFORCE", "seed": 202, "steps": 50000, "return_mean": 410.1000061035156, "return_iqr": 35.75, "loss": -1.6377073526382446}
+{"algo": "REINFORCE", "seed": 202, "steps": 55000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 3.2091007232666016}
+{"algo": "REINFORCE", "seed": 202, "steps": 60000, "return_mean": 500.0, "return_iqr": 0.0, "loss": -0.3521612584590912}
+{"algo": "REINFORCE", "seed": 202, "steps": 65000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 1.0148473978042603}
+{"algo": "REINFORCE", "seed": 202, "steps": 70000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 0.06390730291604996}
+{"algo": "REINFORCE", "seed": 202, "steps": 75000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 0.05985536053776741}
+{"algo": "REINFORCE", "seed": 202, "steps": 80000, "return_mean": 500.0, "return_iqr": 0.0, "loss": -0.5187804698944092}
+{"algo": "REINFORCE", "seed": 202, "steps": 85000, "return_mean": 500.0, "return_iqr": 0.0, "loss": -0.40257343649864197}
+{"algo": "REINFORCE", "seed": 202, "steps": 90000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 1.0467255115509033}
+{"algo": "REINFORCE", "seed": 202, "steps": 95000, "return_mean": 483.79998779296875, "return_iqr": 7.5, "loss": -2.1104087829589844}
+{"algo": "REINFORCE", "seed": 202, "steps": 100000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 0.1476910263299942}
+{"algo": "REINFORCE", "seed": 202, "steps": 105000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 0.3274040222167969}
+{"algo": "REINFORCE", "seed": 202, "steps": 110000, "return_mean": 500.0, "return_iqr": 0.0, "loss": -0.1912374347448349}
+{"algo": "REINFORCE", "seed": 202, "steps": 115000, "return_mean": 500.0, "return_iqr": 0.0, "loss": -0.507561206817627}
+{"algo": "REINFORCE", "seed": 202, "steps": 120000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 0.5425127148628235}
+{"algo": "REINFORCE", "seed": 202, "steps": 125000, "return_mean": 500.0, "return_iqr": 0.0, "loss": -0.2606956660747528}
+{"algo": "REINFORCE", "seed": 202, "steps": 130000, "return_mean": 500.0, "return_iqr": 0.0, "loss": -2.656728506088257}
+{"algo": "REINFORCE", "seed": 202, "steps": 135000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 1.184421181678772}
+{"algo": "REINFORCE", "seed": 202, "steps": 140000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 1.014914870262146}
+{"algo": "REINFORCE", "seed": 202, "steps": 145000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 0.21607613563537598}
+{"algo": "REINFORCE", "seed": 202, "steps": 150000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 0.1873047798871994}
+{"algo": "REINFORCE", "seed": 202, "steps": 155000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 0.2469792515039444}
+{"algo": "REINFORCE", "seed": 202, "steps": 160000, "return_mean": 500.0, "return_iqr": 0.0, "loss": -0.42002445459365845}
+{"algo": "REINFORCE", "seed": 202, "steps": 165000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 0.42669737339019775}
+{"algo": "REINFORCE", "seed": 202, "steps": 170000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 1.435748815536499}
+{"algo": "REINFORCE", "seed": 202, "steps": 175000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 1.021636724472046}
+{"algo": "REINFORCE", "seed": 202, "steps": 180000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 0.3103651702404022}
+{"algo": "REINFORCE", "seed": 202, "steps": 185000, "return_mean": 500.0, "return_iqr": 0.0, "loss": -0.24428118765354156}
+{"algo": "REINFORCE", "seed": 202, "steps": 190000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 1.1304389238357544}
+{"algo": "REINFORCE", "seed": 202, "steps": 195000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 0.07470937818288803}
+{"algo": "REINFORCE", "seed": 202, "steps": 200000, "return_mean": 500.0, "return_iqr": 0.0, "loss": -1.529435634613037}
+{"algo": "ActorCritic", "seed": 202, "steps": 5000, "return_mean": 55.20000076293945, "return_iqr": 9.5, "actor_loss": -0.021824199706315994, "critic_loss": 0.007736165542155504, "delta": -0.08795547485351562}
+{"algo": "ActorCritic", "seed": 202, "steps": 10000, "return_mean": 395.29998779296875, "return_iqr": 98.5, "actor_loss": 0.05997039005160332, "critic_loss": 0.09681407362222672, "delta": 0.31114959716796875}
+{"algo": "ActorCritic", "seed": 202, "steps": 15000, "return_mean": 485.20001220703125, "return_iqr": 9.0, "actor_loss": 0.014933684840798378, "critic_loss": 0.47692495584487915, "delta": 0.6905975341796875}
+{"algo": "ActorCritic", "seed": 202, "steps": 20000, "return_mean": 500.0, "return_iqr": 0.0, "actor_loss": 0.000840117922052741, "critic_loss": 0.036931928247213364, "delta": 0.19217681884765625}
+{"algo": "ActorCritic", "seed": 202, "steps": 25000, "return_mean": 489.1000061035156, "return_iqr": 23.25, "actor_loss": -0.12118843197822571, "critic_loss": 0.03580581396818161, "delta": -0.1892242431640625}
+{"algo": "ActorCritic", "seed": 202, "steps": 30000, "return_mean": 500.0, "return_iqr": 0.0, "actor_loss": 0.0048994519747793674, "critic_loss": 0.09096110612154007, "delta": 0.30159759521484375}
+{"algo": "ActorCritic", "seed": 202, "steps": 35000, "return_mean": 386.0, "return_iqr": 47.25, "actor_loss": 0.29974502325057983, "critic_loss": 0.054770827293395996, "delta": 0.23403167724609375}
+{"algo": "ActorCritic", "seed": 202, "steps": 40000, "return_mean": 500.0, "return_iqr": 0.0, "actor_loss": 3.1677188871981343e-06, "critic_loss": 0.12224805355072021, "delta": 0.349639892578125}
+{"algo": "ActorCritic", "seed": 202, "steps": 45000, "return_mean": 500.0, "return_iqr": 0.0, "actor_loss": 0.00044615179649554193, "critic_loss": 0.13263928890228271, "delta": 0.36419677734375}
+{"algo": "ActorCritic", "seed": 202, "steps": 50000, "return_mean": 500.0, "return_iqr": 0.0, "actor_loss": 3.883583019614889e-07, "critic_loss": 0.00034654513001441956, "delta": 0.01861572265625}
+{"algo": "ActorCritic", "seed": 202, "steps": 55000, "return_mean": 310.1000061035156, "return_iqr": 46.75, "actor_loss": 3.031572668987792e-05, "critic_loss": 1.437781611457467e-05, "delta": 0.00379180908203125}
+{"algo": "ActorCritic", "seed": 202, "steps": 60000, "return_mean": 477.8999938964844, "return_iqr": 0.0, "actor_loss": -0.0003454078105278313, "critic_loss": 1.2667582035064697, "delta": -1.1255035400390625}
+{"algo": "ActorCritic", "seed": 202, "steps": 65000, "return_mean": 445.1000061035156, "return_iqr": 82.5, "actor_loss": 0.0003608398255892098, "critic_loss": 0.004593031946569681, "delta": 0.06777191162109375}
+{"algo": "ActorCritic", "seed": 202, "steps": 70000, "return_mean": 428.0, "return_iqr": 61.0, "actor_loss": 0.0004396438307594508, "critic_loss": 0.5688233375549316, "delta": 0.7542037963867188}
+{"algo": "ActorCritic", "seed": 202, "steps": 75000, "return_mean": 326.20001220703125, "return_iqr": 11.0, "actor_loss": 6.21630169916898e-05, "critic_loss": 0.0041120233945548534, "delta": 0.06412506103515625}
+{"algo": "ActorCritic", "seed": 202, "steps": 80000, "return_mean": 500.0, "return_iqr": 0.0, "actor_loss": -0.0775688886642456, "critic_loss": 0.9230490326881409, "delta": -0.96075439453125}
+{"algo": "ActorCritic", "seed": 202, "steps": 85000, "return_mean": 237.0, "return_iqr": 9.0, "actor_loss": 0.0006102857296355069, "critic_loss": 1.0763872861862183, "delta": 1.0374908447265625}
+{"algo": "ActorCritic", "seed": 202, "steps": 90000, "return_mean": 296.29998779296875, "return_iqr": 23.25, "actor_loss": -0.05369454249739647, "critic_loss": 0.009172235615551472, "delta": -0.09577178955078125}
+{"algo": "ActorCritic", "seed": 202, "steps": 95000, "return_mean": 198.8000030517578, "return_iqr": 26.75, "actor_loss": 0.0014474503695964813, "critic_loss": 4.011696815490723, "delta": 2.0029220581054688}
+{"algo": "ActorCritic", "seed": 202, "steps": 100000, "return_mean": 151.3000030517578, "return_iqr": 2.75, "actor_loss": -3.571618799469434e-05, "critic_loss": 0.027379099279642105, "delta": -0.16546630859375}
+{"algo": "ActorCritic", "seed": 202, "steps": 105000, "return_mean": 500.0, "return_iqr": 0.0, "actor_loss": 0.0010169916786253452, "critic_loss": 0.004784224554896355, "delta": 0.0691680908203125}
+{"algo": "ActorCritic", "seed": 202, "steps": 110000, "return_mean": 48.79999923706055, "return_iqr": 88.0, "actor_loss": -0.2314244657754898, "critic_loss": 4.2950239181518555, "delta": -2.072443962097168}
+{"algo": "ActorCritic", "seed": 202, "steps": 115000, "return_mean": 302.70001220703125, "return_iqr": 8.25, "actor_loss": 0.40728241205215454, "critic_loss": 0.5133166313171387, "delta": 0.716461181640625}
+{"algo": "ActorCritic", "seed": 202, "steps": 120000, "return_mean": 200.1999969482422, "return_iqr": 16.25, "actor_loss": -0.0010272673098370433, "critic_loss": 0.058573514223098755, "delta": -0.2420196533203125}
+{"algo": "ActorCritic", "seed": 202, "steps": 125000, "return_mean": 500.0, "return_iqr": 0.0, "actor_loss": -7.209114119177684e-05, "critic_loss": 0.06648695468902588, "delta": -0.25785064697265625}
+{"algo": "ActorCritic", "seed": 202, "steps": 130000, "return_mean": 172.0, "return_iqr": 2.75, "actor_loss": -0.0848340317606926, "critic_loss": 0.35192325711250305, "delta": -0.593231201171875}
+{"algo": "ActorCritic", "seed": 202, "steps": 135000, "return_mean": 162.39999389648438, "return_iqr": 5.5, "actor_loss": -0.008470788598060608, "critic_loss": 0.008294124156236649, "delta": -0.09107208251953125}
+{"algo": "ActorCritic", "seed": 202, "steps": 140000, "return_mean": 9.399999618530273, "return_iqr": 1.0, "actor_loss": 3.1275993706003646e-07, "critic_loss": 6.883383274078369, "delta": 2.6236202716827393}
+{"algo": "ActorCritic", "seed": 202, "steps": 145000, "return_mean": 9.300000190734863, "return_iqr": 1.0, "actor_loss": 8.643156412802e-09, "critic_loss": 0.005256836302578449, "delta": 0.07250404357910156}
+{"algo": "ActorCritic", "seed": 202, "steps": 150000, "return_mean": 9.5, "return_iqr": 1.0, "actor_loss": 1.0468853561818037e-09, "critic_loss": 7.712194201303646e-05, "delta": 0.008781909942626953}
+{"algo": "ActorCritic", "seed": 202, "steps": 155000, "return_mean": 9.600000381469727, "return_iqr": 1.0, "actor_loss": 1.0908835612610801e-08, "critic_loss": 0.008374068886041641, "delta": 0.09150993824005127}
+{"algo": "ActorCritic", "seed": 202, "steps": 160000, "return_mean": 9.0, "return_iqr": 1.5, "actor_loss": 7.981470595552764e-09, "critic_loss": 0.004482760559767485, "delta": 0.06695342063903809}
+{"algo": "ActorCritic", "seed": 202, "steps": 165000, "return_mean": 9.399999618530273, "return_iqr": 1.0, "actor_loss": 4.8084989323626814e-09, "critic_loss": 0.0016270419582724571, "delta": 0.04033660888671875}
+{"algo": "ActorCritic", "seed": 202, "steps": 170000, "return_mean": 9.699999809265137, "return_iqr": 0.75, "actor_loss": -1.6960373105945337e-09, "critic_loss": 0.00020241863967385143, "delta": -0.01422739028930664}
+{"algo": "ActorCritic", "seed": 202, "steps": 175000, "return_mean": 9.399999618530273, "return_iqr": 1.0, "actor_loss": 3.2853795239873307e-09, "critic_loss": 0.0007595402421429753, "delta": 0.027559757232666016}
+{"algo": "ActorCritic", "seed": 202, "steps": 180000, "return_mean": 9.600000381469727, "return_iqr": 1.0, "actor_loss": -7.541985924675032e-10, "critic_loss": 4.0026821807259694e-05, "delta": -0.0063266754150390625}
+{"algo": "ActorCritic", "seed": 202, "steps": 185000, "return_mean": 9.300000190734863, "return_iqr": 1.0, "actor_loss": -3.8974126148616506e-09, "critic_loss": 0.0010688886977732182, "delta": -0.03269386291503906}
+{"algo": "ActorCritic", "seed": 202, "steps": 190000, "return_mean": 9.199999809265137, "return_iqr": 0.75, "actor_loss": -4.110745965846263e-09, "critic_loss": 0.001189107191748917, "delta": -0.03448343276977539}
+{"algo": "ActorCritic", "seed": 202, "steps": 195000, "return_mean": 9.399999618530273, "return_iqr": 1.0, "actor_loss": -6.954281595028533e-09, "critic_loss": 0.003403174690902233, "delta": -0.058336734771728516}
+{"algo": "ActorCritic", "seed": 202, "steps": 200000, "return_mean": 9.5, "return_iqr": 1.0, "actor_loss": 4.177480139588852e-09, "critic_loss": 0.0012280286755412817, "delta": 0.03504323959350586}
+{"algo": "DQN", "seed": 202, "steps": 5000, "return_mean": 94.4000015258789, "return_iqr": 13.75, "epsilon": 0.9802, "replay_size": 5000}
+{"algo": "DQN", "seed": 202, "steps": 10000, "return_mean": 88.0, "return_iqr": 4.75, "epsilon": 0.95545, "replay_size": 10000}
+{"algo": "DQN", "seed": 202, "steps": 15000, "return_mean": 14.399999618530273, "return_iqr": 1.0, "epsilon": 0.9307, "replay_size": 15000}
+{"algo": "DQN", "seed": 202, "steps": 20000, "return_mean": 78.69999694824219, "return_iqr": 4.5, "epsilon": 0.90595, "replay_size": 20000}
+{"algo": "DQN", "seed": 202, "steps": 25000, "return_mean": 89.19999694824219, "return_iqr": 1.75, "epsilon": 0.8812, "replay_size": 20000}
+{"algo": "DQN", "seed": 202, "steps": 30000, "return_mean": 69.4000015258789, "return_iqr": 2.0, "epsilon": 0.85645, "replay_size": 20000}
+{"algo": "DQN", "seed": 202, "steps": 35000, "return_mean": 94.5, "return_iqr": 2.75, "epsilon": 0.8317, "replay_size": 20000}
+{"algo": "DQN", "seed": 202, "steps": 40000, "return_mean": 59.900001525878906, "return_iqr": 7.25, "epsilon": 0.8069500000000001, "replay_size": 20000}
+{"algo": "DQN", "seed": 202, "steps": 45000, "return_mean": 92.9000015258789, "return_iqr": 1.75, "epsilon": 0.7822, "replay_size": 20000}
+{"algo": "DQN", "seed": 202, "steps": 50000, "return_mean": 94.19999694824219, "return_iqr": 3.75, "epsilon": 0.75745, "replay_size": 20000}
+{"algo": "DQN", "seed": 202, "steps": 55000, "return_mean": 97.80000305175781, "return_iqr": 5.75, "epsilon": 0.7326999999999999, "replay_size": 20000}
+{"algo": "DQN", "seed": 202, "steps": 60000, "return_mean": 88.5999984741211, "return_iqr": 2.5, "epsilon": 0.7079500000000001, "replay_size": 20000}
+{"algo": "DQN", "seed": 202, "steps": 65000, "return_mean": 95.80000305175781, "return_iqr": 2.75, "epsilon": 0.6832, "replay_size": 20000}
+{"algo": "DQN", "seed": 202, "steps": 70000, "return_mean": 92.0999984741211, "return_iqr": 3.25, "epsilon": 0.65845, "replay_size": 20000}
+{"algo": "DQN", "seed": 202, "steps": 75000, "return_mean": 89.30000305175781, "return_iqr": 5.0, "epsilon": 0.6336999999999999, "replay_size": 20000}
+{"algo": "DQN", "seed": 202, "steps": 80000, "return_mean": 78.80000305175781, "return_iqr": 4.25, "epsilon": 0.60895, "replay_size": 20000}
+{"algo": "DQN", "seed": 202, "steps": 85000, "return_mean": 94.80000305175781, "return_iqr": 2.75, "epsilon": 0.5842, "replay_size": 20000}
+{"algo": "DQN", "seed": 202, "steps": 90000, "return_mean": 104.30000305175781, "return_iqr": 3.5, "epsilon": 0.55945, "replay_size": 20000}
+{"algo": "DQN", "seed": 202, "steps": 95000, "return_mean": 99.4000015258789, "return_iqr": 1.75, "epsilon": 0.5347, "replay_size": 20000}
+{"algo": "DQN", "seed": 202, "steps": 100000, "return_mean": 92.4000015258789, "return_iqr": 2.75, "epsilon": 0.50995, "replay_size": 20000}
+{"algo": "DQN", "seed": 202, "steps": 105000, "return_mean": 96.5, "return_iqr": 3.5, "epsilon": 0.48519999999999996, "replay_size": 20000}
+{"algo": "DQN", "seed": 202, "steps": 110000, "return_mean": 124.4000015258789, "return_iqr": 3.75, "epsilon": 0.4604499999999999, "replay_size": 20000}
+{"algo": "DQN", "seed": 202, "steps": 115000, "return_mean": 90.0, "return_iqr": 2.25, "epsilon": 0.4357000000000001, "replay_size": 20000}
+{"algo": "DQN", "seed": 202, "steps": 120000, "return_mean": 75.30000305175781, "return_iqr": 60.25, "epsilon": 0.41095000000000004, "replay_size": 20000}
+{"algo": "DQN", "seed": 202, "steps": 125000, "return_mean": 96.80000305175781, "return_iqr": 2.0, "epsilon": 0.3862, "replay_size": 20000}
+{"algo": "DQN", "seed": 202, "steps": 130000, "return_mean": 96.4000015258789, "return_iqr": 2.5, "epsilon": 0.36144999999999994, "replay_size": 20000}
+{"algo": "DQN", "seed": 202, "steps": 135000, "return_mean": 92.9000015258789, "return_iqr": 2.0, "epsilon": 0.3367, "replay_size": 20000}
+{"algo": "DQN", "seed": 202, "steps": 140000, "return_mean": 92.5999984741211, "return_iqr": 2.0, "epsilon": 0.31195000000000006, "replay_size": 20000}
+{"algo": "DQN", "seed": 202, "steps": 145000, "return_mean": 90.4000015258789, "return_iqr": 3.0, "epsilon": 0.2872, "replay_size": 20000}
+{"algo": "DQN", "seed": 202, "steps": 150000, "return_mean": 92.9000015258789, "return_iqr": 2.75, "epsilon": 0.26244999999999996, "replay_size": 20000}
+{"algo": "DQN", "seed": 202, "steps": 155000, "return_mean": 88.19999694824219, "return_iqr": 4.5, "epsilon": 0.23770000000000002, "replay_size": 20000}
+{"algo": "DQN", "seed": 202, "steps": 160000, "return_mean": 89.4000015258789, "return_iqr": 2.5, "epsilon": 0.21294999999999997, "replay_size": 20000}
+{"algo": "DQN", "seed": 202, "steps": 165000, "return_mean": 88.4000015258789, "return_iqr": 3.5, "epsilon": 0.18820000000000003, "replay_size": 20000}
+{"algo": "DQN", "seed": 202, "steps": 170000, "return_mean": 87.80000305175781, "return_iqr": 1.75, "epsilon": 0.16344999999999998, "replay_size": 20000}
+{"algo": "DQN", "seed": 202, "steps": 175000, "return_mean": 89.30000305175781, "return_iqr": 2.75, "epsilon": 0.13870000000000005, "replay_size": 20000}
+{"algo": "DQN", "seed": 202, "steps": 180000, "return_mean": 88.69999694824219, "return_iqr": 3.5, "epsilon": 0.11395, "replay_size": 20000}
+{"algo": "DQN", "seed": 202, "steps": 185000, "return_mean": 92.5999984741211, "return_iqr": 1.75, "epsilon": 0.08919999999999995, "replay_size": 20000}
+{"algo": "DQN", "seed": 202, "steps": 190000, "return_mean": 104.9000015258789, "return_iqr": 2.75, "epsilon": 0.06445000000000001, "replay_size": 20000}
+{"algo": "DQN", "seed": 202, "steps": 195000, "return_mean": 88.30000305175781, "return_iqr": 0.75, "epsilon": 0.03970000000000007, "replay_size": 20000}
+{"algo": "DQN", "seed": 202, "steps": 200000, "return_mean": 92.5, "return_iqr": 1.75, "epsilon": 0.014950000000000019, "replay_size": 20000}
+{"algo": "REINFORCE", "seed": 303, "steps": 5000, "return_mean": 271.8999938964844, "return_iqr": 64.0, "loss": 2.9896090030670166}
+{"algo": "REINFORCE", "seed": 303, "steps": 10000, "return_mean": 302.0, "return_iqr": 41.0, "loss": -3.460015296936035}
+{"algo": "REINFORCE", "seed": 303, "steps": 15000, "return_mean": 144.6999969482422, "return_iqr": 30.0, "loss": -6.303103923797607}
+{"algo": "REINFORCE", "seed": 303, "steps": 20000, "return_mean": 263.3999938964844, "return_iqr": 27.5, "loss": 5.601989269256592}
+{"algo": "REINFORCE", "seed": 303, "steps": 25000, "return_mean": 219.3000030517578, "return_iqr": 23.25, "loss": -1.8923101425170898}
+{"algo": "REINFORCE", "seed": 303, "steps": 30000, "return_mean": 494.5, "return_iqr": 12.75, "loss": 4.921110153198242}
+{"algo": "REINFORCE", "seed": 303, "steps": 35000, "return_mean": 464.70001220703125, "return_iqr": 19.5, "loss": -1.5670511722564697}
+{"algo": "REINFORCE", "seed": 303, "steps": 40000, "return_mean": 424.1000061035156, "return_iqr": 155.5, "loss": -2.7094478607177734}
+{"algo": "REINFORCE", "seed": 303, "steps": 45000, "return_mean": 500.0, "return_iqr": 0.0, "loss": -5.545993804931641}
+{"algo": "REINFORCE", "seed": 303, "steps": 50000, "return_mean": 329.29998779296875, "return_iqr": 27.25, "loss": -4.468790531158447}
+{"algo": "REINFORCE", "seed": 303, "steps": 55000, "return_mean": 189.3000030517578, "return_iqr": 17.25, "loss": 4.2009477615356445}
+{"algo": "REINFORCE", "seed": 303, "steps": 60000, "return_mean": 150.0, "return_iqr": 18.25, "loss": -1.722438097000122}
+{"algo": "REINFORCE", "seed": 303, "steps": 65000, "return_mean": 127.30000305175781, "return_iqr": 19.5, "loss": -2.122589588165283}
+{"algo": "REINFORCE", "seed": 303, "steps": 70000, "return_mean": 159.5, "return_iqr": 17.5, "loss": 6.557790279388428}
+{"algo": "REINFORCE", "seed": 303, "steps": 75000, "return_mean": 327.29998779296875, "return_iqr": 93.75, "loss": 5.082024097442627}
+{"algo": "REINFORCE", "seed": 303, "steps": 80000, "return_mean": 500.0, "return_iqr": 0.0, "loss": -0.6402077674865723}
+{"algo": "REINFORCE", "seed": 303, "steps": 85000, "return_mean": 458.5, "return_iqr": 14.25, "loss": -1.3006162643432617}
+{"algo": "REINFORCE", "seed": 303, "steps": 90000, "return_mean": 411.6000061035156, "return_iqr": 210.0, "loss": 1.059545636177063}
+{"algo": "REINFORCE", "seed": 303, "steps": 95000, "return_mean": 364.79998779296875, "return_iqr": 235.75, "loss": -3.4450206756591797}
+{"algo": "REINFORCE", "seed": 303, "steps": 100000, "return_mean": 120.0, "return_iqr": 14.0, "loss": 0.7001702785491943}
+{"algo": "REINFORCE", "seed": 303, "steps": 105000, "return_mean": 423.1000061035156, "return_iqr": 170.0, "loss": 5.300719261169434}
+{"algo": "REINFORCE", "seed": 303, "steps": 110000, "return_mean": 410.79998779296875, "return_iqr": 194.75, "loss": 5.098908424377441}
+{"algo": "REINFORCE", "seed": 303, "steps": 115000, "return_mean": 469.0, "return_iqr": 44.25, "loss": 1.689279317855835}
+{"algo": "REINFORCE", "seed": 303, "steps": 120000, "return_mean": 449.29998779296875, "return_iqr": 96.0, "loss": 1.9040844440460205}
+{"algo": "REINFORCE", "seed": 303, "steps": 125000, "return_mean": 271.29998779296875, "return_iqr": 66.0, "loss": 4.366029739379883}
+{"algo": "REINFORCE", "seed": 303, "steps": 130000, "return_mean": 156.6999969482422, "return_iqr": 35.25, "loss": -1.0254573822021484}
+{"algo": "REINFORCE", "seed": 303, "steps": 135000, "return_mean": 319.1000061035156, "return_iqr": 194.5, "loss": 9.698756217956543}
+{"algo": "REINFORCE", "seed": 303, "steps": 140000, "return_mean": 412.0, "return_iqr": 158.25, "loss": 0.01993354596197605}
+{"algo": "REINFORCE", "seed": 303, "steps": 145000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 2.4876890182495117}
+{"algo": "REINFORCE", "seed": 303, "steps": 150000, "return_mean": 472.79998779296875, "return_iqr": 39.75, "loss": -0.023377899080514908}
+{"algo": "REINFORCE", "seed": 303, "steps": 155000, "return_mean": 455.70001220703125, "return_iqr": 71.25, "loss": 0.17946094274520874}
+{"algo": "REINFORCE", "seed": 303, "steps": 160000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 1.8095898628234863}
+{"algo": "REINFORCE", "seed": 303, "steps": 165000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 0.8860605955123901}
+{"algo": "REINFORCE", "seed": 303, "steps": 170000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 0.06306738406419754}
+{"algo": "REINFORCE", "seed": 303, "steps": 175000, "return_mean": 483.0, "return_iqr": 0.0, "loss": -0.31195977330207825}
+{"algo": "REINFORCE", "seed": 303, "steps": 180000, "return_mean": 493.79998779296875, "return_iqr": 0.0, "loss": 0.989215612411499}
+{"algo": "REINFORCE", "seed": 303, "steps": 185000, "return_mean": 500.0, "return_iqr": 0.0, "loss": -0.17978408932685852}
+{"algo": "REINFORCE", "seed": 303, "steps": 190000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 0.5481982231140137}
+{"algo": "REINFORCE", "seed": 303, "steps": 195000, "return_mean": 500.0, "return_iqr": 0.0, "loss": 0.5052559971809387}
+{"algo": "REINFORCE", "seed": 303, "steps": 200000, "return_mean": 500.0, "return_iqr": 0.0, "loss": -12.74734115600586}
+{"algo": "ActorCritic", "seed": 303, "steps": 5000, "return_mean": 162.6999969482422, "return_iqr": 25.0, "actor_loss": -1.0909912586212158, "critic_loss": 445.7057189941406, "delta": -21.111743927001953}
+{"algo": "ActorCritic", "seed": 303, "steps": 10000, "return_mean": 154.6999969482422, "return_iqr": 26.0, "actor_loss": 0.34168073534965515, "critic_loss": 0.220983624458313, "delta": 0.4700889587402344}
+{"algo": "ActorCritic", "seed": 303, "steps": 15000, "return_mean": 160.6999969482422, "return_iqr": 30.25, "actor_loss": 0.19401466846466064, "critic_loss": 0.42281943559646606, "delta": 0.6502456665039062}
+{"algo": "ActorCritic", "seed": 303, "steps": 20000, "return_mean": 500.0, "return_iqr": 0.0, "actor_loss": 0.5855726003646851, "critic_loss": 0.5561152696609497, "delta": 0.7457313537597656}
+{"algo": "ActorCritic", "seed": 303, "steps": 25000, "return_mean": 500.0, "return_iqr": 0.0, "actor_loss": 0.005106327123939991, "critic_loss": 0.0020282696932554245, "delta": 0.04503631591796875}
+{"algo": "ActorCritic", "seed": 303, "steps": 30000, "return_mean": 148.60000610351562, "return_iqr": 13.0, "actor_loss": -0.03524060547351837, "critic_loss": 0.0014595603570342064, "delta": -0.038204193115234375}
+{"algo": "ActorCritic", "seed": 303, "steps": 35000, "return_mean": 162.89999389648438, "return_iqr": 8.25, "actor_loss": -0.0054129743948578835, "critic_loss": 0.005966016091406345, "delta": -0.077239990234375}
+{"algo": "ActorCritic", "seed": 303, "steps": 40000, "return_mean": 384.79998779296875, "return_iqr": 61.75, "actor_loss": -0.03953692317008972, "critic_loss": 0.011088280007243156, "delta": -0.1053009033203125}
+{"algo": "ActorCritic", "seed": 303, "steps": 45000, "return_mean": 466.5, "return_iqr": 52.25, "actor_loss": 0.0008699765312485397, "critic_loss": 0.46407246589660645, "delta": 0.6812286376953125}
+{"algo": "ActorCritic", "seed": 303, "steps": 50000, "return_mean": 246.89999389648438, "return_iqr": 21.0, "actor_loss": -0.01582811027765274, "critic_loss": 0.10965530574321747, "delta": -0.3311424255371094}
+{"algo": "ActorCritic", "seed": 303, "steps": 55000, "return_mean": 146.39999389648438, "return_iqr": 5.25, "actor_loss": -0.02356508933007717, "critic_loss": 0.353763222694397, "delta": -0.5947799682617188}
+{"algo": "ActorCritic", "seed": 303, "steps": 60000, "return_mean": 287.29998779296875, "return_iqr": 49.0, "actor_loss": 0.019276941195130348, "critic_loss": 0.03046339377760887, "delta": 0.17453765869140625}
+{"algo": "ActorCritic", "seed": 303, "steps": 65000, "return_mean": 9.199999809265137, "return_iqr": 1.75, "actor_loss": -1.0005396688939072e-05, "critic_loss": 2.0369549019960687e-05, "delta": -0.004513263702392578}
+{"algo": "ActorCritic", "seed": 303, "steps": 70000, "return_mean": 29.799999237060547, "return_iqr": 6.25, "actor_loss": 0.01228533685207367, "critic_loss": 0.3793281614780426, "delta": 0.6158962249755859}
+{"algo": "ActorCritic", "seed": 303, "steps": 75000, "return_mean": 129.0, "return_iqr": 22.0, "actor_loss": -0.008598018437623978, "critic_loss": 0.1411805897951126, "delta": -0.37574005126953125}
+{"algo": "ActorCritic", "seed": 303, "steps": 80000, "return_mean": 251.6999969482422, "return_iqr": 35.5, "actor_loss": -1.9047556634177454e-06, "critic_loss": 0.077218197286129, "delta": -0.2778816223144531}
+{"algo": "ActorCritic", "seed": 303, "steps": 85000, "return_mean": 245.89999389648438, "return_iqr": 46.25, "actor_loss": 0.0682353600859642, "critic_loss": 0.009292091242969036, "delta": 0.09639549255371094}
+{"algo": "ActorCritic", "seed": 303, "steps": 90000, "return_mean": 286.6000061035156, "return_iqr": 90.75, "actor_loss": 2.4240827769972384e-05, "critic_loss": 0.08133149147033691, "delta": 0.285186767578125}
+{"algo": "ActorCritic", "seed": 303, "steps": 95000, "return_mean": 211.60000610351562, "return_iqr": 59.5, "actor_loss": 0.002309757750481367, "critic_loss": 0.01698916219174862, "delta": 0.1303424835205078}
+{"algo": "ActorCritic", "seed": 303, "steps": 100000, "return_mean": 396.5, "return_iqr": 185.5, "actor_loss": 6.980372724285644e-09, "critic_loss": 0.0034287585876882076, "delta": 0.05855560302734375}
+{"algo": "ActorCritic", "seed": 303, "steps": 105000, "return_mean": 421.5, "return_iqr": 165.75, "actor_loss": 2.1961570340067738e-08, "critic_loss": 0.01508425921201706, "delta": 0.1228179931640625}
+{"algo": "ActorCritic", "seed": 303, "steps": 110000, "return_mean": 146.39999389648438, "return_iqr": 11.5, "actor_loss": 0.15151771903038025, "critic_loss": 0.0064427838660776615, "delta": 0.08026695251464844}
+{"algo": "ActorCritic", "seed": 303, "steps": 115000, "return_mean": 416.1000061035156, "return_iqr": 108.75, "actor_loss": -0.1583426296710968, "critic_loss": 0.011773388832807541, "delta": -0.1085052490234375}
+{"algo": "ActorCritic", "seed": 303, "steps": 120000, "return_mean": 177.89999389648438, "return_iqr": 10.0, "actor_loss": 0.0034659290686249733, "critic_loss": 0.0197453610599041, "delta": 0.1405181884765625}
+{"algo": "ActorCritic", "seed": 303, "steps": 125000, "return_mean": 395.6000061035156, "return_iqr": 175.5, "actor_loss": 0.003310534870252013, "critic_loss": 0.0621495395898819, "delta": 0.249298095703125}
+{"algo": "ActorCritic", "seed": 303, "steps": 130000, "return_mean": 167.1999969482422, "return_iqr": 10.5, "actor_loss": 0.2016286700963974, "critic_loss": 0.032108258455991745, "delta": 0.17918777465820312}
+{"algo": "ActorCritic", "seed": 303, "steps": 135000, "return_mean": 101.19999694824219, "return_iqr": 11.25, "actor_loss": 0.02138061262667179, "critic_loss": 0.641278088092804, "delta": 0.8007984161376953}
+{"algo": "ActorCritic", "seed": 303, "steps": 140000, "return_mean": 416.3999938964844, "return_iqr": 113.5, "actor_loss": -2.8133038654232223e-07, "critic_loss": 5.569458961486816, "delta": -2.3599700927734375}
+{"algo": "ActorCritic", "seed": 303, "steps": 145000, "return_mean": 217.60000610351562, "return_iqr": 36.25, "actor_loss": -0.01844422146677971, "critic_loss": 0.019422924146056175, "delta": -0.13936614990234375}
+{"algo": "ActorCritic", "seed": 303, "steps": 150000, "return_mean": 426.5, "return_iqr": 112.5, "actor_loss": 0.11559218168258667, "critic_loss": 0.2542681097984314, "delta": 0.5042500495910645}
+{"algo": "ActorCritic", "seed": 303, "steps": 155000, "return_mean": 157.39999389648438, "return_iqr": 14.5, "actor_loss": -0.3424496054649353, "critic_loss": 0.015386544167995453, "delta": -0.12404251098632812}
+{"algo": "ActorCritic", "seed": 303, "steps": 160000, "return_mean": 114.30000305175781, "return_iqr": 9.5, "actor_loss": -0.0008602607995271683, "critic_loss": 0.08381756395101547, "delta": -0.28951263427734375}
+{"algo": "ActorCritic", "seed": 303, "steps": 165000, "return_mean": 277.79998779296875, "return_iqr": 13.0, "actor_loss": 0.3053662180900574, "critic_loss": 1.0336649417877197, "delta": 1.016693115234375}
+{"algo": "ActorCritic", "seed": 303, "steps": 170000, "return_mean": 298.1000061035156, "return_iqr": 70.25, "actor_loss": -0.0018515149131417274, "critic_loss": 0.07244981825351715, "delta": -0.2691650390625}
+{"algo": "ActorCritic", "seed": 303, "steps": 175000, "return_mean": 283.20001220703125, "return_iqr": 7.25, "actor_loss": 0.001538749784231186, "critic_loss": 0.36296138167381287, "delta": 0.6024627685546875}
+{"algo": "ActorCritic", "seed": 303, "steps": 180000, "return_mean": 185.6999969482422, "return_iqr": 6.75, "actor_loss": -0.00604815362021327, "critic_loss": 0.13952282071113586, "delta": -0.37352752685546875}
+{"algo": "ActorCritic", "seed": 303, "steps": 185000, "return_mean": 500.0, "return_iqr": 0.0, "actor_loss": 0.004326218739151955, "critic_loss": 0.9154123663902283, "delta": 0.9567718505859375}
+{"algo": "ActorCritic", "seed": 303, "steps": 190000, "return_mean": 500.0, "return_iqr": 0.0, "actor_loss": -0.2657259404659271, "critic_loss": 0.3347933292388916, "delta": -0.57861328125}
+{"algo": "ActorCritic", "seed": 303, "steps": 195000, "return_mean": 271.3999938964844, "return_iqr": 21.75, "actor_loss": -0.7348431944847107, "critic_loss": 0.546349823474884, "delta": -0.7391548156738281}
+{"algo": "ActorCritic", "seed": 303, "steps": 200000, "return_mean": 500.0, "return_iqr": 0.0, "actor_loss": 3.162972643622197e-05, "critic_loss": 2.4359257221221924, "delta": 1.5607452392578125}
+{"algo": "DQN", "seed": 303, "steps": 5000, "return_mean": 74.9000015258789, "return_iqr": 3.5, "epsilon": 0.9802, "replay_size": 5000}
+{"algo": "DQN", "seed": 303, "steps": 10000, "return_mean": 165.60000610351562, "return_iqr": 3.5, "epsilon": 0.95545, "replay_size": 10000}
+{"algo": "DQN", "seed": 303, "steps": 15000, "return_mean": 41.70000076293945, "return_iqr": 10.5, "epsilon": 0.9307, "replay_size": 15000}
+{"algo": "DQN", "seed": 303, "steps": 20000, "return_mean": 27.700000762939453, "return_iqr": 18.25, "epsilon": 0.90595, "replay_size": 20000}
+{"algo": "DQN", "seed": 303, "steps": 25000, "return_mean": 63.29999923706055, "return_iqr": 4.25, "epsilon": 0.8812, "replay_size": 20000}
+{"algo": "DQN", "seed": 303, "steps": 30000, "return_mean": 91.5999984741211, "return_iqr": 5.5, "epsilon": 0.85645, "replay_size": 20000}
+{"algo": "DQN", "seed": 303, "steps": 35000, "return_mean": 95.5999984741211, "return_iqr": 3.75, "epsilon": 0.8317, "replay_size": 20000}
+{"algo": "DQN", "seed": 303, "steps": 40000, "return_mean": 97.0999984741211, "return_iqr": 1.75, "epsilon": 0.8069500000000001, "replay_size": 20000}
+{"algo": "DQN", "seed": 303, "steps": 45000, "return_mean": 97.4000015258789, "return_iqr": 3.5, "epsilon": 0.7822, "replay_size": 20000}
+{"algo": "DQN", "seed": 303, "steps": 50000, "return_mean": 100.19999694824219, "return_iqr": 4.25, "epsilon": 0.75745, "replay_size": 20000}
+{"algo": "DQN", "seed": 303, "steps": 55000, "return_mean": 88.80000305175781, "return_iqr": 4.5, "epsilon": 0.7326999999999999, "replay_size": 20000}
+{"algo": "DQN", "seed": 303, "steps": 60000, "return_mean": 308.3999938964844, "return_iqr": 78.75, "epsilon": 0.7079500000000001, "replay_size": 20000}
+{"algo": "DQN", "seed": 303, "steps": 65000, "return_mean": 54.099998474121094, "return_iqr": 4.5, "epsilon": 0.6832, "replay_size": 20000}
+{"algo": "DQN", "seed": 303, "steps": 70000, "return_mean": 90.69999694824219, "return_iqr": 3.25, "epsilon": 0.65845, "replay_size": 20000}
+{"algo": "DQN", "seed": 303, "steps": 75000, "return_mean": 97.4000015258789, "return_iqr": 0.0, "epsilon": 0.6336999999999999, "replay_size": 20000}
+{"algo": "DQN", "seed": 303, "steps": 80000, "return_mean": 88.9000015258789, "return_iqr": 1.5, "epsilon": 0.60895, "replay_size": 20000}
+{"algo": "DQN", "seed": 303, "steps": 85000, "return_mean": 92.19999694824219, "return_iqr": 3.5, "epsilon": 0.5842, "replay_size": 20000}
+{"algo": "DQN", "seed": 303, "steps": 90000, "return_mean": 106.30000305175781, "return_iqr": 2.0, "epsilon": 0.55945, "replay_size": 20000}
+{"algo": "DQN", "seed": 303, "steps": 95000, "return_mean": 82.80000305175781, "return_iqr": 4.75, "epsilon": 0.5347, "replay_size": 20000}
+{"algo": "DQN", "seed": 303, "steps": 100000, "return_mean": 82.0, "return_iqr": 12.25, "epsilon": 0.50995, "replay_size": 20000}
+{"algo": "DQN", "seed": 303, "steps": 105000, "return_mean": 88.9000015258789, "return_iqr": 1.75, "epsilon": 0.48519999999999996, "replay_size": 20000}
+{"algo": "DQN", "seed": 303, "steps": 110000, "return_mean": 90.0999984741211, "return_iqr": 3.5, "epsilon": 0.4604499999999999, "replay_size": 20000}
+{"algo": "DQN", "seed": 303, "steps": 115000, "return_mean": 87.5999984741211, "return_iqr": 2.75, "epsilon": 0.4357000000000001, "replay_size": 20000}
+{"algo": "DQN", "seed": 303, "steps": 120000, "return_mean": 88.80000305175781, "return_iqr": 2.75, "epsilon": 0.41095000000000004, "replay_size": 20000}
+{"algo": "DQN", "seed": 303, "steps": 125000, "return_mean": 88.0, "return_iqr": 4.0, "epsilon": 0.3862, "replay_size": 20000}
+{"algo": "DQN", "seed": 303, "steps": 130000, "return_mean": 88.5999984741211, "return_iqr": 3.0, "epsilon": 0.36144999999999994, "replay_size": 20000}
+{"algo": "DQN", "seed": 303, "steps": 135000, "return_mean": 86.69999694824219, "return_iqr": 3.5, "epsilon": 0.3367, "replay_size": 20000}
+{"algo": "DQN", "seed": 303, "steps": 140000, "return_mean": 88.9000015258789, "return_iqr": 2.5, "epsilon": 0.31195000000000006, "replay_size": 20000}
+{"algo": "DQN", "seed": 303, "steps": 145000, "return_mean": 89.0999984741211, "return_iqr": 2.75, "epsilon": 0.2872, "replay_size": 20000}
+{"algo": "DQN", "seed": 303, "steps": 150000, "return_mean": 88.5999984741211, "return_iqr": 2.75, "epsilon": 0.26244999999999996, "replay_size": 20000}
+{"algo": "DQN", "seed": 303, "steps": 155000, "return_mean": 88.4000015258789, "return_iqr": 3.75, "epsilon": 0.23770000000000002, "replay_size": 20000}
+{"algo": "DQN", "seed": 303, "steps": 160000, "return_mean": 89.0999984741211, "return_iqr": 2.75, "epsilon": 0.21294999999999997, "replay_size": 20000}
+{"algo": "DQN", "seed": 303, "steps": 165000, "return_mean": 88.5999984741211, "return_iqr": 3.75, "epsilon": 0.18820000000000003, "replay_size": 20000}
+{"algo": "DQN", "seed": 303, "steps": 170000, "return_mean": 88.9000015258789, "return_iqr": 1.5, "epsilon": 0.16344999999999998, "replay_size": 20000}
+{"algo": "DQN", "seed": 303, "steps": 175000, "return_mean": 89.19999694824219, "return_iqr": 3.5, "epsilon": 0.13870000000000005, "replay_size": 20000}
+{"algo": "DQN", "seed": 303, "steps": 180000, "return_mean": 101.9000015258789, "return_iqr": 4.5, "epsilon": 0.11395, "replay_size": 20000}
+{"algo": "DQN", "seed": 303, "steps": 185000, "return_mean": 162.10000610351562, "return_iqr": 103.25, "epsilon": 0.08919999999999995, "replay_size": 20000}
+{"algo": "DQN", "seed": 303, "steps": 190000, "return_mean": 97.0, "return_iqr": 2.75, "epsilon": 0.06445000000000001, "replay_size": 20000}
+{"algo": "DQN", "seed": 303, "steps": 195000, "return_mean": 91.69999694824219, "return_iqr": 5.5, "epsilon": 0.03970000000000007, "replay_size": 20000}
+{"algo": "DQN", "seed": 303, "steps": 200000, "return_mean": 94.0999984741211, "return_iqr": 8.25, "epsilon": 0.014950000000000019, "replay_size": 20000}

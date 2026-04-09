@@ -1,4 +1,4 @@
-"""RLVR helpers for Chapter 6."""
+"""Chapter 6 RLVR algorithm helpers."""
 
 from .config import *
 from .formatter import *
