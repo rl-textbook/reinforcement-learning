@@ -18,8 +18,8 @@ class CFG:
 
     # Prompt / generation
     max_prompt_tokens: int = 256
-    max_new_tokens_train: int = 128
-    max_new_tokens_eval: int = 128
+    max_new_tokens_train: int = 96
+    max_new_tokens_eval: int = 96
     temperature_train: float = 1.0
     top_p_train: float = 0.95
     temperature_eval: float = 1.0
