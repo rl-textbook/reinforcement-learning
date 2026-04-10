@@ -149,7 +149,7 @@ It includes curves for:
 - GRPO
 - an idealized **independent-samples** reference curve for GRPO
 
-This is one of the most useful plots in the chapter because it separates two different questions:
+This plot separates two different questions:
 
 - did the model get better at generating good answers at all?
 - how much additional value do you get from **best-of-N sampling** at inference time?
@@ -326,7 +326,7 @@ A very important intuition here is that moving from 2 to 8 is not a tiny change.
 ### 2. Token cap / max tokens
 A recent practical change for local runs is keeping the generation cap at **96 tokens**.
 
-This is one of the most valuable changes for making the chapter usable on everyday hardware.
+This is a strong change for making the chapter usable on everyday hardware.
 
 Why it matters:
 
@@ -448,8 +448,6 @@ Why it matters:
 
 - Larger values make the GRPO curve less noisy.
 - Larger values also slow evaluation substantially.
-
-This is one of the most useful places to save time without changing training itself.
 
 ### 9. Evaluation batch size
 The main CLI flag is:
@@ -696,8 +694,6 @@ This is often worth turning on for Chapter 6 if you are running on a modest GPU.
 --model-name gpt2
 ```
 Overrides the configured model.
-
-This is one of the biggest practical levers when adapting the chapter to different hardware.
 
 ---
 
