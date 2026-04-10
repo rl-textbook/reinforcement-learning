@@ -11,8 +11,7 @@ The script does not just train one model. It runs a staged comparison built arou
 - **PPO (mitigated)** starting from the same SFT model, but with more conservative PPO settings
 - a final evaluation package with preference metrics, helpfulness and safety comparisons, qualitative examples, plots, CSV logs, and JSON summaries
 
-So Chapter 5 is not a “single training run” chapter.
-It is a **pipeline chapter** where the run configuration determines:
+Chapter 5 is a **pipeline chapter** where the run configuration determines:
 
 - how expensive the whole experiment is
 - whether PPO is stable enough to finish
@@ -20,7 +19,7 @@ It is a **pipeline chapter** where the run configuration determines:
 - how much of the story is about SFT vs DPO
 - how much of the story is about PPO vanilla vs PPO mitigated
 
-The book covers the deeper RLHF concepts. This README stays practical:
+This README explains:
 
 - what the script actually does
 - what gets saved
